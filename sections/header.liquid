@@ -1,86 +1,124 @@
 {%- if section.settings.show_announcement -%}
 <div class="announcement-bar" role="banner">
-  <span>{{ section.settings.announcement_text }}</span>
-  <button class="announcement-close" aria-label="Fermer l'annonce" style="background:none;border:none;cursor:pointer;margin-left:1rem;color:inherit;font-size:1rem;">×</button>
+  <div class="container" style="display:flex;align-items:center;justify-content:center;gap:1rem;">
+    <span>{{ section.settings.announcement_text }}</span>
+    <button class="announcement-close"
+            aria-label="Fermer"
+            style="background:none;border:none;cursor:pointer;color:inherit;font-size:1.1rem;line-height:1;padding:0 0.25rem;opacity:0.8;">
+      ×
+    </button>
+  </div>
 </div>
 {%- endif -%}
 
-<header class="site-header" role="banner">
+<header class="site-header {% if section.settings.sticky_header %}site-header--sticky{% endif %}"
+        role="banner"
+        id="site-header">
   <div class="container">
     <div class="header-inner">
 
-      {%- comment -%} Logo {%- endcomment -%}
-      <a href="{{ routes.root_url }}" class="header-logo" aria-label="{{ shop.name }}">
+      {%- comment -%} ── Logo ── {%- endcomment -%}
+      <a href="{{ routes.root_url }}"
+         class="header-logo"
+         aria-label="{{ shop.name }} — Accueil">
         {%- if section.settings.logo != blank -%}
-          <img src="{{ section.settings.logo | image_url: width: 120 }}"
-               alt="{{ shop.name }}"
-               width="120"
-               height="40"
+          {%- assign logo_width  = section.settings.logo_width  | default: 120 -%}
+          {%- assign logo_height = section.settings.logo_height | default: 40  -%}
+          <img src="{{ section.settings.logo | image_url: width: logo_width | times: 2 }}"
+               alt="{{ section.settings.logo.alt | escape | default: shop.name }}"
+               width="{{ logo_width }}"
+               height="{{ logo_height }}"
+               style="width:{{ logo_width }}px;height:auto;display:block;"
                loading="eager">
         {%- else -%}
           <div class="logo-icon" aria-hidden="true">⚡</div>
-          {{ shop.name }}
+          <span>{{ shop.name }}</span>
         {%- endif -%}
       </a>
 
-      {%- comment -%} Desktop Navigation {%- endcomment -%}
-      <nav class="header-nav" role="navigation" aria-label="{{ 'accessibility.nav_label' | t }}">
-        {%- for link in section.settings.menu.links -%}
-          {%- if link.links != blank -%}
-            <div class="nav-dropdown" style="position:relative;">
-              <a href="{{ link.url }}" class="{% if link.active %}active{% endif %}">{{ link.title }}</a>
-            </div>
-          {%- else -%}
-            <a href="{{ link.url }}" {% if link.active %}aria-current="page"{% endif %}>{{ link.title }}</a>
-          {%- endif -%}
-        {%- endfor -%}
-      </nav>
+      {%- comment -%} ── Desktop nav ── {%- endcomment -%}
+      {%- if section.settings.menu != blank -%}
+        <nav class="header-nav"
+             role="navigation"
+             aria-label="Navigation principale">
+          {%- for link in section.settings.menu.links -%}
+            <a href="{{ link.url }}"
+               {% if link.active %}aria-current="page"{% endif %}>
+              {{ link.title }}
+            </a>
+          {%- endfor -%}
+        </nav>
+      {%- endif -%}
 
-      {%- comment -%} Header Actions {%- endcomment -%}
+      {%- comment -%} ── Actions ── {%- endcomment -%}
       <div class="header-actions">
+
         {%- if shop.customer_accounts_enabled -%}
           <a href="{{ routes.account_url }}"
              class="cart-icon-btn"
-             aria-label="{{ 'customer.account.title' | t }}"
-             title="{{ 'customer.account.title' | t }}">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+             aria-label="Mon compte"
+             title="Mon compte">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="2"
+                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+              <circle cx="12" cy="7" r="4"/>
             </svg>
           </a>
         {%- endif -%}
 
         <a href="{{ routes.cart_url }}"
            class="cart-icon-btn"
-           aria-label="{{ 'sections.cart.title' | t }}"
-           title="{{ 'sections.cart.title' | t }}">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+           aria-label="Panier — {{ cart.item_count }} article{% if cart.item_count != 1 %}s{% endif %}"
+           title="Panier">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="2"
+               stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
             <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
           </svg>
-          <span class="cart-count {% if cart.item_count > 0 %}has-items{% endif %}" aria-label="{{ cart.item_count }} articles">{{ cart.item_count }}</span>
+          <span class="cart-count {% if cart.item_count > 0 %}has-items{% endif %}"
+                aria-hidden="true">{{ cart.item_count }}</span>
         </a>
 
-        <button class="mobile-menu-btn" aria-label="Menu" aria-expanded="false" aria-controls="mobile-nav">
+        <button class="mobile-menu-btn"
+                aria-label="Ouvrir le menu"
+                aria-expanded="false"
+                aria-controls="mobile-nav">
           <span></span>
           <span></span>
           <span></span>
         </button>
-      </div>
 
+      </div>
     </div>
   </div>
 
-  {%- comment -%} Mobile Navigation {%- endcomment -%}
-  <nav id="mobile-nav" class="mobile-nav" role="navigation" aria-label="Navigation mobile">
-    {%- for link in section.settings.menu.links -%}
-      <a href="{{ link.url }}" {% if link.active %}aria-current="page"{% endif %}>{{ link.title }}</a>
-    {%- endfor -%}
+  {%- comment -%} ── Mobile nav ── {%- endcomment -%}
+  <nav id="mobile-nav"
+       class="mobile-nav"
+       role="navigation"
+       aria-label="Navigation mobile">
+    {%- if section.settings.menu != blank -%}
+      {%- for link in section.settings.menu.links -%}
+        <a href="{{ link.url }}"
+           {% if link.active %}aria-current="page"{% endif %}>
+          {{ link.title }}
+        </a>
+      {%- endfor -%}
+    {%- endif -%}
     <div style="padding-top:1rem;border-top:1px solid var(--color-border);margin-top:0.5rem;">
-      <a href="{{ routes.cart_url }}" class="btn btn-primary btn-full" style="text-align:center;">
-        Panier ({{ cart.item_count }})
+      <a href="{{ routes.cart_url }}"
+         class="btn btn-primary btn-full"
+         style="justify-content:center;">
+        Panier
+        {%- if cart.item_count > 0 -%}
+          ({{ cart.item_count }})
+        {%- endif -%}
       </a>
     </div>
   </nav>
+
 </header>
 
 {% schema %}
@@ -89,15 +127,59 @@
   "class": "section-header",
   "settings": [
     {
+      "type": "header",
+      "content": "Logo"
+    },
+    {
       "type": "image_picker",
       "id": "logo",
-      "label": "Logo"
+      "label": "Image du logo",
+      "info": "Formats recommandés : PNG transparent ou SVG. Téléversez directement depuis cette option."
+    },
+    {
+      "type": "range",
+      "id": "logo_width",
+      "label": "Largeur du logo (px)",
+      "min": 60,
+      "max": 280,
+      "step": 10,
+      "default": 120,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "logo_height",
+      "label": "Hauteur max du logo (px)",
+      "min": 20,
+      "max": 80,
+      "step": 5,
+      "default": 40,
+      "unit": "px"
+    },
+    {
+      "type": "header",
+      "content": "Navigation"
     },
     {
       "type": "link_list",
       "id": "menu",
-      "label": "Menu de navigation",
+      "label": "Menu principal",
       "default": "main-menu"
+    },
+    {
+      "type": "header",
+      "content": "Comportement"
+    },
+    {
+      "type": "checkbox",
+      "id": "sticky_header",
+      "label": "Header fixe (sticky)",
+      "default": true,
+      "info": "Le header reste visible en haut de page lors du défilement."
+    },
+    {
+      "type": "header",
+      "content": "Barre d'annonce"
     },
     {
       "type": "checkbox",
@@ -108,8 +190,8 @@
     {
       "type": "text",
       "id": "announcement_text",
-      "label": "Texte d'annonce",
-      "default": "🚀 Livraison offerte dès 49€ — Protection anti-moustiques nouvelle génération"
+      "label": "Texte de l'annonce",
+      "default": "🚀 Livraison offerte à partir de 49€ — Expédition sous 24h"
     }
   ]
 }

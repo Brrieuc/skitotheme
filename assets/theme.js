@@ -6,19 +6,12 @@
   'use strict';
 
   // ============================================
-  // Header scroll behavior
+  // Header scroll behavior (only for sticky headers)
   // ============================================
-  const header = document.querySelector('.site-header');
+  const header = document.querySelector('.site-header--sticky');
   if (header) {
-    let lastScroll = 0;
     window.addEventListener('scroll', () => {
-      const scrollY = window.scrollY;
-      if (scrollY > 50) {
-        header.classList.add('scrolled');
-      } else {
-        header.classList.remove('scrolled');
-      }
-      lastScroll = scrollY;
+      header.classList.toggle('scrolled', window.scrollY > 50);
     }, { passive: true });
   }
 

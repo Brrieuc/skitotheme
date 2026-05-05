@@ -2,9 +2,13 @@
   <div class="container">
 
     <div class="text-center fade-in">
-      <p class="section-label">{{ section.settings.label }}</p>
+      {%- if section.settings.label != blank -%}
+        <p class="section-label">{{ section.settings.label }}</p>
+      {%- endif -%}
       <h2 class="section-title" id="faq-heading">{{ section.settings.title }}</h2>
-      <p class="section-subtitle">{{ section.settings.subtitle }}</p>
+      {%- if section.settings.subtitle != blank -%}
+        <p class="section-subtitle">{{ section.settings.subtitle }}</p>
+      {%- endif -%}
     </div>
 
     <div class="faq-list fade-in" role="list">
@@ -17,8 +21,12 @@
               {{ block.settings.question }}
               <span class="faq-icon" aria-hidden="true">+</span>
             </button>
-            <div class="faq-answer" id="faq-answer-{{ block.id }}" role="region">
-              <div class="faq-answer-inner">{{ block.settings.answer }}</div>
+            <div class="faq-answer"
+                 id="faq-answer-{{ block.id }}"
+                 role="region">
+              <div class="faq-answer-inner">
+                {{ block.settings.answer }}
+              </div>
             </div>
           </div>
         {%- endif -%}
@@ -59,19 +67,19 @@
       "type": "textarea",
       "id": "subtitle",
       "label": "Sous-titre",
-      "default": "Trouvez les réponses aux questions les plus courantes sur Skito."
+      "default": "Retrouvez les réponses aux questions les plus courantes."
     },
     {
       "type": "text",
       "id": "contact_text",
-      "label": "Texte contact",
+      "label": "Texte contact (optionnel)",
       "default": "Vous n'avez pas trouvé votre réponse ?"
     },
     {
       "type": "text",
       "id": "contact_cta_text",
       "label": "Bouton contact",
-      "default": "Contactez notre équipe"
+      "default": "Contactez-nous"
     },
     {
       "type": "url",
@@ -88,13 +96,13 @@
           "type": "text",
           "id": "question",
           "label": "Question",
-          "default": "Comment fonctionne Skito ?"
+          "default": "Quels sont les délais de livraison ?"
         },
         {
           "type": "richtext",
           "id": "answer",
           "label": "Réponse",
-          "default": "<p>Skito utilise une technologie d'émission ultrasonique et thermique pour repousser les moustiques dans un rayon de plusieurs mètres. Il se recharge via USB et fonctionne jusqu'à 12h d'affilée.</p>"
+          "default": "<p>Les commandes sont généralement expédiées sous 1 à 3 jours ouvrés. Un email de confirmation avec numéro de suivi vous est envoyé dès l'expédition.</p>"
         }
       ]
     }
@@ -106,43 +114,36 @@
         {
           "type": "item",
           "settings": {
-            "question": "Comment fonctionne Skito exactement ?",
-            "answer": "<p>Skito combine plusieurs technologies pour repousser les moustiques : émission d'ultrasons, diffusion légère de vapeur répulsive et chaleur ciblée. L'ensemble crée une zone de protection dans un rayon de 3 à 5 mètres autour de l'appareil.</p>"
+            "question": "Quels sont les délais de livraison ?",
+            "answer": "<p>Les commandes sont généralement traitées sous 1 à 3 jours ouvrés. Un email de confirmation avec numéro de suivi vous est envoyé dès l'expédition.</p>"
           }
         },
         {
           "type": "item",
           "settings": {
-            "question": "Quelle est l'autonomie de la batterie ?",
-            "answer": "<p>La batterie intégrée offre jusqu'à 12 heures d'utilisation continue sur une seule charge. La recharge complète prend environ 2 heures via le câble USB-C inclus.</p>"
+            "question": "Comment suivre ma commande ?",
+            "answer": "<p>Dès l'expédition de votre colis, vous recevez un email avec un numéro de suivi. Vous pouvez tracker votre commande en temps réel via le lien fourni.</p>"
           }
         },
         {
           "type": "item",
           "settings": {
-            "question": "Est-ce que Skito est sûr pour les enfants et les animaux ?",
-            "answer": "<p>Oui, Skito est conçu pour être sûr pour toute la famille. Il n'émet aucun produit chimique nocif et n'est pas toxique pour les animaux domestiques. Les ultrasons sont à une fréquence inaudible pour les humains et la majorité des animaux de compagnie.</p>"
+            "question": "Puis-je retourner un produit ?",
+            "answer": "<p>Oui. Vous disposez de 30 jours à compter de la réception pour retourner un produit. Contactez notre service client pour initier la procédure de retour.</p>"
           }
         },
         {
           "type": "item",
           "settings": {
-            "question": "Skito fonctionne-t-il en extérieur ?",
-            "answer": "<p>Absolument. Skito est conçu spécifiquement pour l'utilisation en extérieur : terrasse, jardin, camping, festivals, voyages. Il est résistant aux éclaboussures et efficace même par vent léger.</p>"
+            "question": "Quels moyens de paiement acceptez-vous ?",
+            "answer": "<p>Nous acceptons les cartes bancaires (Visa, Mastercard, American Express) ainsi que PayPal. Tous les paiements sont sécurisés par chiffrement SSL.</p>"
           }
         },
         {
           "type": "item",
           "settings": {
-            "question": "Quelle est votre politique de retour ?",
-            "answer": "<p>Nous offrons une garantie satisfait ou remboursé de 30 jours. Si Skito ne vous convient pas, contactez notre service client et nous vous remboursons intégralement, sans questions posées.</p>"
-          }
-        },
-        {
-          "type": "item",
-          "settings": {
-            "question": "Combien de temps pour recevoir ma commande ?",
-            "answer": "<p>Toutes les commandes sont expédiées sous 24h ouvrées. La livraison standard prend 3 à 5 jours ouvrés en France métropolitaine. La livraison express (24-48h) est disponible en option.</p>"
+            "question": "Livrez-vous à l'international ?",
+            "answer": "<p>Nous livrons en France métropolitaine et dans plusieurs pays européens. Les options et délais disponibles selon votre pays sont affichés lors du passage en caisse.</p>"
           }
         }
       ]

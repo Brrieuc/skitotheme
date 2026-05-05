@@ -2,74 +2,86 @@
   <div class="container">
 
     <div class="text-center fade-in reviews-header">
-      <p class="section-label">{{ section.settings.label }}</p>
+      {%- if section.settings.label != blank -%}
+        <p class="section-label">{{ section.settings.label }}</p>
+      {%- endif -%}
       <h2 class="section-title" id="reviews-heading">{{ section.settings.title }}</h2>
-      <p class="section-subtitle">{{ section.settings.subtitle }}</p>
+      {%- if section.settings.subtitle != blank -%}
+        <p class="section-subtitle">{{ section.settings.subtitle }}</p>
+      {%- endif -%}
     </div>
 
-    {%- comment -%} Summary bar {%- endcomment -%}
-    <div class="reviews-summary fade-in">
-      <div class="reviews-score">
-        <div class="reviews-score-number">{{ section.settings.score }}</div>
-        <div class="reviews-score-stars" aria-label="Note: {{ section.settings.score }}/5">★★★★★</div>
-        <div class="reviews-score-count">{{ section.settings.total_reviews }} avis vérifiés</div>
-      </div>
-      <div class="reviews-bars" role="img" aria-label="Répartition des notes">
-        <div class="review-bar-row">
-          <span class="review-bar-label">5★</span>
-          <div class="review-bar-track"><div class="review-bar-fill" style="width:{{ section.settings.pct_5 }}%"></div></div>
-          <span class="review-bar-pct">{{ section.settings.pct_5 }}%</span>
+    {%- comment -%}
+      Barre de score — uniquement si les valeurs sont renseignées dans le customizer.
+      Ne jamais afficher de stats inventées.
+    {%- endcomment -%}
+    {%- if section.settings.show_score_bar and section.settings.score != blank -%}
+      <div class="reviews-summary fade-in">
+        <div class="reviews-score">
+          <div class="reviews-score-number">{{ section.settings.score }}</div>
+          <div class="reviews-score-stars" aria-label="Note: {{ section.settings.score }}/5">★★★★★</div>
+          {%- if section.settings.total_reviews != blank -%}
+            <div class="reviews-score-count">{{ section.settings.total_reviews }} avis</div>
+          {%- endif -%}
         </div>
-        <div class="review-bar-row">
-          <span class="review-bar-label">4★</span>
-          <div class="review-bar-track"><div class="review-bar-fill" style="width:{{ section.settings.pct_4 }}%"></div></div>
-          <span class="review-bar-pct">{{ section.settings.pct_4 }}%</span>
-        </div>
-        <div class="review-bar-row">
-          <span class="review-bar-label">3★</span>
-          <div class="review-bar-track"><div class="review-bar-fill" style="width:{{ section.settings.pct_3 }}%"></div></div>
-          <span class="review-bar-pct">{{ section.settings.pct_3 }}%</span>
-        </div>
-        <div class="review-bar-row">
-          <span class="review-bar-label">2★</span>
-          <div class="review-bar-track"><div class="review-bar-fill" style="width:{{ section.settings.pct_2 }}%"></div></div>
-          <span class="review-bar-pct">{{ section.settings.pct_2 }}%</span>
-        </div>
-        <div class="review-bar-row">
-          <span class="review-bar-label">1★</span>
-          <div class="review-bar-track"><div class="review-bar-fill" style="width:{{ section.settings.pct_1 }}%"></div></div>
-          <span class="review-bar-pct">{{ section.settings.pct_1 }}%</span>
-        </div>
-      </div>
-    </div>
-
-    {%- comment -%} Review cards {%- endcomment -%}
-    <div class="reviews-grid">
-      {%- for block in section.blocks -%}
-        {%- if block.type == 'review' -%}
-          <article class="review-card glass-card fade-in fade-in-delay-{{ forloop.index }}" {{ block.shopify_attributes }}>
-            <div class="review-header">
-              <div class="reviewer-info">
-                <div class="reviewer-avatar" aria-hidden="true">{{ block.settings.name | slice: 0, 1 | upcase }}</div>
-                <div>
-                  <div class="reviewer-name">{{ block.settings.name }}</div>
-                  <div class="reviewer-date">{{ block.settings.date }}</div>
-                </div>
+        <div class="reviews-bars" role="img" aria-label="Répartition des notes">
+          {%- assign bar_data = '5,4,3,2,1' | split: ',' -%}
+          {%- for star in bar_data -%}
+            {%- assign pct_key = 'pct_' | append: star -%}
+            {%- assign pct_val = section.settings[pct_key] | default: 0 -%}
+            <div class="review-bar-row">
+              <span class="review-bar-label">{{ star }}★</span>
+              <div class="review-bar-track">
+                <div class="review-bar-fill" style="width:{{ pct_val }}%"></div>
               </div>
-              <span class="review-verified">✓ Achat vérifié</span>
+              <span class="review-bar-pct">{{ pct_val }}%</span>
             </div>
-            <div class="review-stars" aria-label="Note: {{ block.settings.rating }}/5">
-              {%- assign rating = block.settings.rating | plus: 0 -%}
-              {%- for i in (1..5) -%}
-                {%- if i <= rating -%}★{%- else -%}<span style="opacity:0.3;">★</span>{%- endif -%}
-              {%- endfor -%}
-            </div>
-            <h3 class="review-title">{{ block.settings.title }}</h3>
-            <p class="review-text">{{ block.settings.text }}</p>
-          </article>
-        {%- endif -%}
-      {%- endfor -%}
-    </div>
+          {%- endfor -%}
+        </div>
+      </div>
+    {%- endif -%}
+
+    {%- comment -%} Cards d'avis — uniquement les blocs ajoutés manuellement {%- endcomment -%}
+    {%- if section.blocks.size > 0 -%}
+      <div class="reviews-grid">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'review' -%}
+            <article class="review-card glass-card fade-in fade-in-delay-{{ forloop.index }}"
+                     {{ block.shopify_attributes }}>
+              <div class="review-header">
+                <div class="reviewer-info">
+                  <div class="reviewer-avatar" aria-hidden="true">
+                    {{ block.settings.name | slice: 0, 1 | upcase }}
+                  </div>
+                  <div>
+                    <div class="reviewer-name">{{ block.settings.name }}</div>
+                    <div class="reviewer-date">{{ block.settings.date }}</div>
+                  </div>
+                </div>
+                {%- if block.settings.verified -%}
+                  <span class="review-verified">✓ Achat vérifié</span>
+                {%- endif -%}
+              </div>
+
+              <div class="review-stars"
+                   aria-label="Note: {{ block.settings.rating }}/5">
+                {%- assign r = block.settings.rating | plus: 0 -%}
+                {%- for i in (1..5) -%}
+                  {%- if i <= r -%}★{%- else -%}
+                    <span style="opacity:0.25;">★</span>
+                  {%- endif -%}
+                {%- endfor -%}
+              </div>
+
+              {%- if block.settings.title != blank -%}
+                <h3 class="review-title">{{ block.settings.title }}</h3>
+              {%- endif -%}
+              <p class="review-text">{{ block.settings.text }}</p>
+            </article>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
 
   </div>
 </section>
@@ -82,154 +94,118 @@
       "type": "text",
       "id": "label",
       "label": "Label",
-      "default": "Ils nous font confiance"
+      "default": "Avis clients"
     },
     {
       "type": "text",
       "id": "title",
       "label": "Titre",
-      "default": "Ce que nos clients disent"
+      "default": "Ce que disent nos clients"
     },
     {
       "type": "textarea",
       "id": "subtitle",
       "label": "Sous-titre",
-      "default": "Plus de 5000 familles, voyageurs et amateurs de plein air protégés par Skito."
+      "info": "Laissez vide pour ne pas afficher."
+    },
+    {
+      "type": "header",
+      "content": "Barre de score (optionnel)"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_score_bar",
+      "label": "Afficher la barre de score",
+      "default": false,
+      "info": "N'activez que si vous avez de vrais avis à afficher."
     },
     {
       "type": "text",
       "id": "score",
-      "label": "Note moyenne",
-      "default": "4.9"
+      "label": "Note moyenne (ex: 4.7)"
     },
     {
       "type": "text",
       "id": "total_reviews",
-      "label": "Nombre total d'avis",
-      "default": "247"
+      "label": "Nombre total d'avis"
     },
     {
       "type": "range",
       "id": "pct_5",
       "label": "% 5 étoiles",
-      "min": 0,
-      "max": 100,
-      "step": 1,
-      "default": 87
+      "min": 0, "max": 100, "step": 1, "default": 70
     },
     {
       "type": "range",
       "id": "pct_4",
       "label": "% 4 étoiles",
-      "min": 0,
-      "max": 100,
-      "step": 1,
-      "default": 9
+      "min": 0, "max": 100, "step": 1, "default": 20
     },
     {
       "type": "range",
       "id": "pct_3",
       "label": "% 3 étoiles",
-      "min": 0,
-      "max": 100,
-      "step": 1,
-      "default": 3
+      "min": 0, "max": 100, "step": 1, "default": 7
     },
     {
       "type": "range",
       "id": "pct_2",
       "label": "% 2 étoiles",
-      "min": 0,
-      "max": 100,
-      "step": 1,
-      "default": 1
+      "min": 0, "max": 100, "step": 1, "default": 2
     },
     {
       "type": "range",
       "id": "pct_1",
       "label": "% 1 étoile",
-      "min": 0,
-      "max": 100,
-      "step": 1,
-      "default": 0
+      "min": 0, "max": 100, "step": 1, "default": 1
     }
   ],
   "blocks": [
     {
       "type": "review",
-      "name": "Avis",
+      "name": "Avis client",
       "settings": [
         {
           "type": "text",
           "id": "name",
-          "label": "Prénom",
+          "label": "Prénom et initiale",
           "default": "Sophie M."
         },
         {
           "type": "text",
           "id": "date",
           "label": "Date",
-          "default": "Avril 2025"
+          "default": "Juin 2025"
         },
         {
           "type": "range",
           "id": "rating",
           "label": "Note",
-          "min": 1,
-          "max": 5,
-          "step": 1,
-          "default": 5
+          "min": 1, "max": 5, "step": 1, "default": 5
+        },
+        {
+          "type": "checkbox",
+          "id": "verified",
+          "label": "Afficher badge 'Achat vérifié'",
+          "default": false
         },
         {
           "type": "text",
           "id": "title",
-          "label": "Titre de l'avis",
-          "default": "Enfin une vraie protection !"
+          "label": "Titre de l'avis (optionnel)"
         },
         {
           "type": "textarea",
           "id": "text",
           "label": "Texte de l'avis",
-          "default": "On l'a testé lors d'un séjour en Corse. Aucune piqûre de toute la semaine, même le soir en terrasse. Je ne pars plus sans mon Skito."
+          "default": "Très bon produit, livraison rapide et bien emballé. Je recommande !"
         }
       ]
     }
   ],
   "presets": [
     {
-      "name": "Avis clients",
-      "blocks": [
-        {
-          "type": "review",
-          "settings": {
-            "name": "Sophie M.",
-            "date": "Avril 2025",
-            "rating": 5,
-            "title": "Enfin une vraie protection !",
-            "text": "On l'a testé lors d'un séjour en Corse. Aucune piqûre de toute la semaine, même le soir en terrasse. Je ne pars plus sans mon Skito."
-          }
-        },
-        {
-          "type": "review",
-          "settings": {
-            "name": "Thomas R.",
-            "date": "Mars 2025",
-            "rating": 5,
-            "title": "Discret et ultra efficace",
-            "text": "Je suis très sceptique avec ce genre de produits, mais Skito m'a convaincu. Compact, rechargeable et vraiment efficace. Parfait pour les soirées jardin."
-          }
-        },
-        {
-          "type": "review",
-          "settings": {
-            "name": "Camille D.",
-            "date": "Mai 2025",
-            "rating": 5,
-            "title": "Le meilleur achat de l'été",
-            "text": "Idéal pour voyager ! Je l'emmène partout depuis mon retour du Portugal. Très bonne autonomie et facile à utiliser. Design super stylé aussi."
-          }
-        }
-      ]
+      "name": "Avis clients"
     }
   ]
 }

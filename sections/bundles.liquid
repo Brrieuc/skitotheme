@@ -1,250 +1,215 @@
-<section class="section bundles" id="bundles" aria-labelledby="bundles-heading">
+{%- comment -%}
+  Section : Produits mis en avant
+  Remplace l'ancienne section "Packs/Bundles" qui contenait des offres fictives.
+  Utilise des product pickers Shopify réels ou un lien vers une collection.
+{%- endcomment -%}
+
+<section class="section bundles" id="featured-products" aria-labelledby="featured-products-heading">
   <div class="container">
 
     <div class="text-center fade-in">
-      <p class="section-label">{{ section.settings.label }}</p>
-      <h2 class="section-title" id="bundles-heading">{{ section.settings.title }}</h2>
-      <p class="section-subtitle">{{ section.settings.subtitle }}</p>
+      {%- if section.settings.label != blank -%}
+        <p class="section-label">{{ section.settings.label }}</p>
+      {%- endif -%}
+      <h2 class="section-title" id="featured-products-heading">{{ section.settings.title }}</h2>
+      {%- if section.settings.subtitle != blank -%}
+        <p class="section-subtitle">{{ section.settings.subtitle }}</p>
+      {%- endif -%}
     </div>
 
-    <div class="bundles-grid">
-      {%- for block in section.blocks -%}
-        {%- if block.type == 'bundle' -%}
-          <div class="bundle-card glass-card fade-in fade-in-delay-{{ forloop.index }} {% if block.settings.featured %}featured{% endif %}"
-               data-bundle="{{ block.id }}"
-               data-variant="{{ block.settings.variant_id }}"
-               data-qty="{{ block.settings.quantity }}"
-               {{ block.shopify_attributes }}>
+    {%- comment -%} Mode collection — affiche les produits d'une collection Shopify {%- endcomment -%}
+    {%- if section.settings.collection != blank -%}
+      {%- assign fp_collection = section.settings.collection -%}
+      <div class="product-cards-grid" style="margin-top:3rem;">
+        {%- for product in fp_collection.products limit: section.settings.products_limit -%}
+          {% render 'product-card', product: product %}
+        {%- else -%}
+          <p class="text-muted text-center" style="grid-column:1/-1;">
+            Aucun produit dans cette collection pour l'instant.
+          </p>
+        {%- endfor -%}
+      </div>
 
-            {%- if block.settings.featured -%}
-              <span class="bundle-badge">⭐ {{ block.settings.featured_label }}</span>
-            {%- endif -%}
+    {%- comment -%} Mode sélection manuelle — product pickers individuels {%- endcomment -%}
+    {%- elsif section.blocks.size > 0 -%}
+      <div class="bundles-grid" style="margin-top:3rem;">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'product' -%}
+            {%- assign fp = block.settings.product -%}
+            {%- if fp != blank -%}
+              <div class="bundle-card glass-card fade-in fade-in-delay-{{ forloop.index }} {% if block.settings.highlight %}featured{% endif %}"
+                   {{ block.shopify_attributes }}>
 
-            <div class="bundle-name">{{ block.settings.name }}</div>
-            <div class="bundle-description">{{ block.settings.description }}</div>
-
-            <div class="bundle-price-area">
-              <span class="bundle-price">{{ block.settings.price }}</span>
-              {%- if block.settings.compare_price != blank -%}
-                <span class="bundle-price-compare">{{ block.settings.compare_price }}</span>
-              {%- endif -%}
-              <div style="margin-top:0.25rem;">
-                <span class="badge badge-green">{{ block.settings.save_text }}</span>
-              </div>
-            </div>
-
-            <ul class="bundle-features" role="list">
-              {%- for i in (1..5) -%}
-                {%- assign feature_key = 'feature_' | append: i -%}
-                {%- assign feature_val = block.settings[feature_key] -%}
-                {%- if feature_val != blank -%}
-                  <li class="bundle-feature">
-                    <span class="bundle-feature-icon" aria-hidden="true">✓</span>
-                    {{ feature_val }}
-                  </li>
+                {%- if block.settings.highlight and block.settings.highlight_label != blank -%}
+                  <span class="bundle-badge">{{ block.settings.highlight_label }}</span>
                 {%- endif -%}
-              {%- endfor -%}
-            </ul>
 
-            {%- if block.settings.variant_id != blank -%}
-              <button class="btn bundle-atc-btn btn-full {% if block.settings.featured %}btn-primary{% else %}btn-secondary{% endif %}"
-                      onclick="window.SkitoCart && window.SkitoCart.addToCart('{{ block.settings.variant_id }}', {{ block.settings.quantity | default: 1 }})">
-                {{ block.settings.cta_text | default: 'Ajouter au panier' }}
-              </button>
+                {%- if fp.featured_image != blank -%}
+                  <a href="{{ fp.url }}" style="display:block;border-radius:var(--radius-md);overflow:hidden;margin-bottom:1.25rem;aspect-ratio:4/3;background:rgba(140,255,102,0.04);">
+                    <img src="{{ fp.featured_image | image_url: width: 600 }}"
+                         alt="{{ fp.featured_image.alt | escape | default: fp.title }}"
+                         width="600"
+                         style="width:100%;height:100%;object-fit:cover;"
+                         loading="lazy">
+                  </a>
+                {%- endif -%}
+
+                <div class="bundle-name">
+                  <a href="{{ fp.url }}" style="color:inherit;text-decoration:none;">{{ fp.title }}</a>
+                </div>
+
+                {%- if fp.description != blank -%}
+                  <div class="bundle-description">
+                    {{ fp.description | strip_html | truncate: 100 }}
+                  </div>
+                {%- endif -%}
+
+                <div class="bundle-price-area">
+                  <span class="bundle-price">{{ fp.price | money }}</span>
+                  {%- if fp.compare_at_price > fp.price -%}
+                    <span class="bundle-price-compare">{{ fp.compare_at_price | money }}</span>
+                    <span class="badge badge-green" style="display:inline-flex;margin-top:0.5rem;font-size:0.7rem;">
+                      -{{ fp.compare_at_price | minus: fp.price | times: 100.0 | divided_by: fp.compare_at_price | round }}%
+                    </span>
+                  {%- endif -%}
+                </div>
+
+                {%- form 'product', fp, class: 'atc-form' -%}
+                  <input type="hidden" name="id" value="{{ fp.selected_or_first_available_variant.id }}">
+                  {%- if fp.available -%}
+                    <button type="submit"
+                            class="btn btn-full {% if block.settings.highlight %}btn-primary{% else %}btn-secondary{% endif %} mt-3"
+                            data-original-text="Ajouter au panier">
+                      Ajouter au panier
+                    </button>
+                  {%- else -%}
+                    <a href="{{ fp.url }}" class="btn btn-secondary btn-full mt-3">
+                      Voir le produit
+                    </a>
+                  {%- endif -%}
+                {%- endform -%}
+
+              </div>
             {%- else -%}
-              <a href="{{ block.settings.cta_url | default: routes.all_products_collection_url }}"
-                 class="btn btn-full {% if block.settings.featured %}btn-primary{% else %}btn-secondary{% endif %}">
-                {{ block.settings.cta_text | default: 'Voir le pack' }}
-              </a>
+              {%- comment -%} Block vide — affiché uniquement dans le customizer {%- endcomment -%}
+              <div class="bundle-card glass-card" {{ block.shopify_attributes }}
+                   style="display:flex;align-items:center;justify-content:center;min-height:200px;opacity:0.4;">
+                <p class="text-muted" style="font-size:0.875rem;text-align:center;">
+                  Sélectionnez un produit<br>dans les paramètres du bloc
+                </p>
+              </div>
             {%- endif -%}
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
 
-          </div>
-        {%- endif -%}
-      {%- endfor -%}
-    </div>
+    {%- else -%}
+      <p class="text-muted text-center" style="margin-top:2rem;">
+        Configurez cette section en sélectionnant une collection ou en ajoutant des blocs produits.
+      </p>
+    {%- endif -%}
+
+    {%- if section.settings.cta_text != blank -%}
+      <div class="text-center" style="margin-top:3rem;">
+        <a href="{{ section.settings.cta_url | default: routes.all_products_collection_url }}"
+           class="btn btn-secondary btn-lg fade-in">
+          {{ section.settings.cta_text }}
+        </a>
+      </div>
+    {%- endif -%}
 
   </div>
 </section>
 
 {% schema %}
 {
-  "name": "Packs / Bundles",
+  "name": "Produits mis en avant",
   "settings": [
     {
       "type": "text",
       "id": "label",
       "label": "Label",
-      "default": "Nos offres"
+      "default": "Nos produits"
     },
     {
       "type": "text",
       "id": "title",
       "label": "Titre",
-      "default": "Choisissez votre pack de protection"
+      "default": "Nos best-sellers"
     },
     {
       "type": "textarea",
       "id": "subtitle",
       "label": "Sous-titre",
-      "default": "Seul, en famille ou pour toute la maison — il y a un Skito pour chaque besoin."
+      "default": "Sélectionnés pour leur efficacité et leur praticité en extérieur."
+    },
+    {
+      "type": "header",
+      "content": "Mode collection (option 1)"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Afficher les produits d'une collection",
+      "info": "Si une collection est sélectionnée, elle prend la priorité sur les blocs produits ci-dessous."
+    },
+    {
+      "type": "range",
+      "id": "products_limit",
+      "label": "Nombre de produits à afficher",
+      "min": 2,
+      "max": 6,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "header",
+      "content": "Bouton bas de section"
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "Texte du bouton (optionnel)",
+      "default": "Voir tous les produits"
+    },
+    {
+      "type": "url",
+      "id": "cta_url",
+      "label": "Lien du bouton"
     }
   ],
   "blocks": [
     {
-      "type": "bundle",
-      "name": "Pack",
+      "type": "product",
+      "name": "Produit",
       "settings": [
         {
-          "type": "text",
-          "id": "name",
-          "label": "Nom du pack",
-          "default": "Pack Solo"
-        },
-        {
-          "type": "text",
-          "id": "description",
-          "label": "Description courte",
-          "default": "L'essentiel pour se protéger seul"
-        },
-        {
-          "type": "text",
-          "id": "price",
-          "label": "Prix affiché",
-          "default": "€29.90"
-        },
-        {
-          "type": "text",
-          "id": "compare_price",
-          "label": "Prix barré",
-          "default": "€39.90"
-        },
-        {
-          "type": "text",
-          "id": "save_text",
-          "label": "Texte économie",
-          "default": "Économisez 10€"
+          "type": "product",
+          "id": "product",
+          "label": "Produit Shopify"
         },
         {
           "type": "checkbox",
-          "id": "featured",
-          "label": "Mettre en avant",
+          "id": "highlight",
+          "label": "Mettre ce produit en avant",
           "default": false
         },
         {
           "type": "text",
-          "id": "featured_label",
+          "id": "highlight_label",
           "label": "Label si mis en avant",
-          "default": "Meilleure vente"
-        },
-        {
-          "type": "text",
-          "id": "feature_1",
-          "label": "Caractéristique 1",
-          "default": "1 appareil Skito Pro"
-        },
-        {
-          "type": "text",
-          "id": "feature_2",
-          "label": "Caractéristique 2",
-          "default": "Câble USB-C inclus"
-        },
-        {
-          "type": "text",
-          "id": "feature_3",
-          "label": "Caractéristique 3",
-          "default": "Livraison offerte"
-        },
-        {
-          "type": "text",
-          "id": "feature_4",
-          "label": "Caractéristique 4"
-        },
-        {
-          "type": "text",
-          "id": "feature_5",
-          "label": "Caractéristique 5"
-        },
-        {
-          "type": "text",
-          "id": "variant_id",
-          "label": "ID variante Shopify (pour ATC)"
-        },
-        {
-          "type": "range",
-          "id": "quantity",
-          "label": "Quantité",
-          "min": 1,
-          "max": 10,
-          "step": 1,
-          "default": 1
-        },
-        {
-          "type": "text",
-          "id": "cta_text",
-          "label": "Texte du bouton",
-          "default": "Choisir ce pack"
-        },
-        {
-          "type": "url",
-          "id": "cta_url",
-          "label": "Lien du bouton (si pas de variante)"
+          "default": "⭐ Best-seller"
         }
       ]
     }
   ],
   "presets": [
     {
-      "name": "Packs / Bundles",
+      "name": "Produits mis en avant",
       "blocks": [
-        {
-          "type": "bundle",
-          "settings": {
-            "name": "Pack Solo",
-            "description": "L'essentiel pour une protection nomade",
-            "price": "€29.90",
-            "compare_price": "€39.90",
-            "save_text": "Économisez 10€",
-            "featured": false,
-            "feature_1": "1 × Skito Pro Shield",
-            "feature_2": "Câble USB-C inclus",
-            "feature_3": "Livraison offerte",
-            "cta_text": "Choisir le Pack Solo"
-          }
-        },
-        {
-          "type": "bundle",
-          "settings": {
-            "name": "Pack Duo",
-            "description": "Protégez vous et votre partenaire",
-            "price": "€49.90",
-            "compare_price": "€69.80",
-            "save_text": "Économisez 20€",
-            "featured": true,
-            "featured_label": "Meilleure offre",
-            "feature_1": "2 × Skito Pro Shield",
-            "feature_2": "2 × Câbles USB-C",
-            "feature_3": "Pochette de transport offerte",
-            "feature_4": "Livraison offerte",
-            "cta_text": "Choisir le Pack Duo"
-          }
-        },
-        {
-          "type": "bundle",
-          "settings": {
-            "name": "Pack Famille",
-            "description": "Toute la famille protégée cet été",
-            "price": "€79.90",
-            "compare_price": "€119.70",
-            "save_text": "Économisez 40€",
-            "featured": false,
-            "feature_1": "4 × Skito Pro Shield",
-            "feature_2": "4 × Câbles USB-C",
-            "feature_3": "Pochette de transport premium",
-            "feature_4": "Livraison express offerte",
-            "feature_5": "Support prioritaire",
-            "cta_text": "Choisir le Pack Famille"
-          }
-        }
+        { "type": "product" },
+        { "type": "product", "settings": { "highlight": true, "highlight_label": "⭐ Best-seller" } },
+        { "type": "product" }
       ]
     }
   ]

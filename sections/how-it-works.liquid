@@ -1,16 +1,24 @@
-<section class="section" id="how-it-works" aria-labelledby="hiw-heading" style="background:var(--color-bg-2);">
+<section class="section" id="how-it-works" aria-labelledby="hiw-heading"
+         style="background:var(--color-bg-2);">
   <div class="container">
 
     <div class="text-center fade-in">
-      <p class="section-label">{{ section.settings.label }}</p>
+      {%- if section.settings.label != blank -%}
+        <p class="section-label">{{ section.settings.label }}</p>
+      {%- endif -%}
       <h2 class="section-title" id="hiw-heading">{{ section.settings.title }}</h2>
-      <p class="section-subtitle">{{ section.settings.subtitle }}</p>
+      {%- if section.settings.subtitle != blank -%}
+        <p class="section-subtitle">{{ section.settings.subtitle }}</p>
+      {%- endif -%}
     </div>
 
     <div class="steps-grid">
       {%- for block in section.blocks -%}
-        <div class="step-card glass-card fade-in fade-in-delay-{{ forloop.index }}" {{ block.shopify_attributes }}>
-          <div class="step-number" aria-label="Étape {{ forloop.index }}">{{ forloop.index }}</div>
+        <div class="step-card glass-card fade-in fade-in-delay-{{ forloop.index }}"
+             {{ block.shopify_attributes }}>
+          <div class="step-number" aria-label="Étape {{ forloop.index }}">
+            {{ forloop.index }}
+          </div>
           <div class="step-icon" aria-hidden="true">{{ block.settings.icon }}</div>
           <h3 class="step-title">{{ block.settings.title }}</h3>
           <p class="step-desc">{{ block.settings.description }}</p>
@@ -37,19 +45,19 @@
       "type": "text",
       "id": "label",
       "label": "Label",
-      "default": "Simple & efficace"
+      "default": "Simple & rapide"
     },
     {
       "type": "text",
       "id": "title",
       "label": "Titre",
-      "default": "En 3 étapes, vous êtes protégé"
+      "default": "Commander, c'est facile"
     },
     {
       "type": "textarea",
       "id": "subtitle",
       "label": "Sous-titre",
-      "default": "Pas de mode d'emploi compliqué. Skito fonctionne immédiatement, partout où vous allez."
+      "default": "En quelques clics, votre commande est passée et expédiée vers chez vous."
     },
     {
       "type": "text",
@@ -59,7 +67,7 @@
     {
       "type": "url",
       "id": "cta_url",
-      "label": "Lien CTA"
+      "label": "Lien du CTA"
     }
   ],
   "blocks": [
@@ -71,19 +79,19 @@
           "type": "text",
           "id": "icon",
           "label": "Icône / Emoji",
-          "default": "⚡"
+          "default": "🛍️"
         },
         {
           "type": "text",
           "id": "title",
           "label": "Titre de l'étape",
-          "default": "Chargez"
+          "default": "Choisissez votre produit"
         },
         {
           "type": "textarea",
           "id": "description",
           "label": "Description",
-          "default": "Branchez Skito sur votre chargeur USB. En 2 heures, la batterie est pleine pour 12h d'autonomie."
+          "default": "Parcourez notre catalogue et ajoutez votre produit au panier."
         }
       ]
     }
@@ -95,25 +103,25 @@
         {
           "type": "step",
           "settings": {
-            "icon": "⚡",
-            "title": "Chargez",
-            "description": "Branchez Skito sur n'importe quel port USB. En 2h, il est prêt pour une journée complète de protection."
+            "icon": "🛍️",
+            "title": "Choisissez",
+            "description": "Parcourez notre catalogue, sélectionnez votre produit et ajoutez-le au panier en un clic."
           }
         },
         {
           "type": "step",
           "settings": {
-            "icon": "▶️",
-            "title": "Activez",
-            "description": "Un seul bouton. Placez Skito à proximité — sur la table, le sol, ou fixez-le à votre sac. C'est tout."
+            "icon": "💳",
+            "title": "Commandez",
+            "description": "Finalisez votre achat en toute sécurité. Paiement par carte, PayPal ou autre."
           }
         },
         {
           "type": "step",
           "settings": {
-            "icon": "🧘",
-            "title": "Profitez",
-            "description": "Détendez-vous. Skito crée une zone de protection invisible autour de vous. Zéro moustique, 100% sérénité."
+            "icon": "📦",
+            "title": "Recevez",
+            "description": "Votre commande est préparée et expédiée avec un numéro de suivi envoyé par email."
           }
         }
       ]

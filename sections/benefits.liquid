@@ -2,14 +2,19 @@
   <div class="container">
 
     <div class="text-center fade-in">
-      <p class="section-label">{{ section.settings.label }}</p>
+      {%- if section.settings.label != blank -%}
+        <p class="section-label">{{ section.settings.label }}</p>
+      {%- endif -%}
       <h2 class="section-title" id="benefits-heading">{{ section.settings.title }}</h2>
-      <p class="section-subtitle">{{ section.settings.subtitle }}</p>
+      {%- if section.settings.subtitle != blank -%}
+        <p class="section-subtitle">{{ section.settings.subtitle }}</p>
+      {%- endif -%}
     </div>
 
     <div class="benefits-grid">
       {%- for block in section.blocks -%}
-        <div class="benefit-card glass-card fade-in fade-in-delay-{{ forloop.index }}" {{ block.shopify_attributes }}>
+        <div class="benefit-card glass-card fade-in fade-in-delay-{{ forloop.index }}"
+             {{ block.shopify_attributes }}>
           <div class="benefit-icon" aria-hidden="true">{{ block.settings.icon }}</div>
           <h3 class="benefit-title">{{ block.settings.title }}</h3>
           <p class="benefit-desc">{{ block.settings.description }}</p>
@@ -28,19 +33,19 @@
       "type": "text",
       "id": "label",
       "label": "Label de section",
-      "default": "Pourquoi Skito"
+      "default": "Pourquoi choisir Skito"
     },
     {
       "type": "text",
       "id": "title",
       "label": "Titre",
-      "default": "Conçu pour votre mode de vie extérieur"
+      "default": "Conçu pour votre vie en extérieur"
     },
     {
       "type": "textarea",
       "id": "subtitle",
       "label": "Sous-titre",
-      "default": "Skito s'adapte à chaque situation — de la terrasse au trek, de la nuit en camping au voyage lointain."
+      "default": "Des produits simples, pratiques et efficaces pour profiter dehors sans contrainte."
     }
   ],
   "blocks": [
@@ -51,20 +56,20 @@
         {
           "type": "text",
           "id": "icon",
-          "label": "Emoji / icône",
+          "label": "Emoji / Icône",
           "default": "🛡️"
         },
         {
           "type": "text",
           "id": "title",
           "label": "Titre",
-          "default": "Protection extérieure"
+          "default": "Idéal en extérieur"
         },
         {
           "type": "textarea",
           "id": "description",
           "label": "Description",
-          "default": "Efficace en plein air, même par vent léger. Idéal pour terrasses, jardins et soirées d'été."
+          "default": "Terrasse, jardin, camping ou voyage — nos produits s'adaptent à toutes vos sorties."
         }
       ]
     }
@@ -77,32 +82,32 @@
           "type": "benefit",
           "settings": {
             "icon": "🛡️",
-            "title": "Protection extérieure",
-            "description": "Efficace en plein air, même par vent léger. Idéal pour terrasses, jardins et soirées d'été."
+            "title": "Protection en extérieur",
+            "description": "Terrasse, jardin, camping ou voyage — profitez de l'air frais sans les désagréments des moustiques."
           }
         },
         {
           "type": "benefit",
           "settings": {
             "icon": "🎒",
-            "title": "Format nomade",
-            "description": "Ultra-compact, il tient dans une poche. Partez en voyage, camping ou festival sans contrainte."
+            "title": "Compact et pratique",
+            "description": "Format léger, facile à transporter. Glissez-le dans votre sac pour l'emmener partout."
           }
         },
         {
           "type": "benefit",
           "settings": {
             "icon": "✨",
-            "title": "Sans spray collant",
-            "description": "Pas de produit sur la peau. Une technologie propre, discrète et respectueuse de votre confort."
+            "title": "Simple à utiliser",
+            "description": "Pas de mode d'emploi compliqué. Déballez, installez, profitez."
           }
         },
         {
           "type": "benefit",
           "settings": {
-            "icon": "⚡",
-            "title": "Rechargeable USB",
-            "description": "Batterie intégrée rechargeable. Un investissement unique pour une protection renouvelable."
+            "icon": "📦",
+            "title": "Livraison rapide",
+            "description": "Commandez aujourd'hui, recevez rapidement. Suivi de colis inclus."
           }
         }
       ]

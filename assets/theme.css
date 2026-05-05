@@ -339,8 +339,10 @@ p { color: var(--color-text-muted); line-height: 1.7; }
 /* ============================================
    HEADER
    ============================================ */
+
+/* Non-sticky fallback — used when sticky option is disabled */
 .site-header {
-  position: fixed;
+  position: relative;
   top: 0;
   left: 0;
   right: 0;
@@ -348,15 +350,35 @@ p { color: var(--color-text-muted); line-height: 1.7; }
   height: var(--nav-height);
   display: flex;
   align-items: center;
+  background: rgba(5, 8, 7, 0.95);
+  border-bottom: 1px solid var(--color-border);
   transition: background var(--transition-base), border-color var(--transition-base), box-shadow var(--transition-base);
 }
 
-.site-header.scrolled {
-  background: rgba(5, 8, 7, 0.9);
+/* Sticky variant — added via schema setting */
+.site-header--sticky {
+  position: fixed;
+  background: transparent;
+  border-bottom-color: transparent;
+}
+
+.site-header--sticky.scrolled {
+  background: rgba(5, 8, 7, 0.92);
   border-bottom: 1px solid var(--color-border);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   box-shadow: 0 4px 32px rgba(0,0,0,0.3);
+}
+
+/* When sticky is active, push main content down */
+body:has(.site-header--sticky) { padding-top: var(--nav-height); }
+
+/* Logo image — max-height for cleanliness */
+.header-logo img {
+  max-height: 48px;
+  width: auto;
+  display: block;
+  object-fit: contain;
 }
 
 .header-inner {

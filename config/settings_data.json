@@ -1,0 +1,40 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "current": {
+    "sections": {
+      "header": {
+        "type": "header",
+        "settings": {
+          "logo": "shopify://shop_images/Posts_Insta_6.png",
+          "logo_width": 120,
+          "logo_height": 40,
+          "menu": "main-menu",
+          "sticky_header": false,
+          "show_announcement": true,
+          "announcement_text": "🚀 Livraison offerte à partir de 49€ — Expédition sous 24h"
+        }
+      },
+      "footer": {
+        "type": "footer",
+        "settings": {
+          "logo_width": 100,
+          "brand_description": "Produits anti-moustiques pour profiter de l'extérieur — terrasse, jardin, voyage et camping.",
+          "social_instagram": "",
+          "social_tiktok": "",
+          "social_facebook": "",
+          "social_youtube": "",
+          "copyright_extra": "Tous droits réservés."
+        }
+      }
+    },
+    "content_for_index": []
+  }
+}

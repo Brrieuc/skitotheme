@@ -36,13 +36,13 @@
 
   <a href="#main-content" class="sr-only">{{ 'accessibility.skip_to_content' | t }}</a>
 
-  {% sections 'header' %}
+  {% section 'header' %}
 
   <main id="main-content" role="main" tabindex="-1">
     {{ content_for_layout }}
   </main>
 
-  {% sections 'footer' %}
+  {% section 'footer' %}
 
   <div class="notification" role="status" aria-live="polite" aria-atomic="true"></div>
 

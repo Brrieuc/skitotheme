@@ -1,0 +1,117 @@
+{%- paginate collection.products by section.settings.products_per_page -%}
+<div class="collection-page section">
+  <div class="container">
+
+    {%- comment -%} Collection header {%- endcomment -%}
+    <div class="collection-header fade-in">
+      {%- if collection.image != blank -%}
+        <div style="width:80px;height:80px;border-radius:var(--radius-md);overflow:hidden;margin-bottom:1rem;">
+          <img src="{{ collection.image | image_url: width: 160 }}" alt="{{ collection.image.alt | escape }}" width="80" height="80" loading="lazy">
+        </div>
+      {%- endif -%}
+      <p class="section-label">Collection</p>
+      <h1 style="font-size:clamp(1.8rem,4vw,3rem);margin-bottom:0.75rem;">
+        {{ collection.title }}
+      </h1>
+      {%- if collection.description != blank -%}
+        <p style="color:var(--color-text-muted);max-width:600px;line-height:1.7;">{{ collection.description }}</p>
+      {%- endif -%}
+    </div>
+
+    {%- comment -%} Filters {%- endcomment -%}
+    <div class="collection-filters fade-in">
+      <button class="filter-btn active">Tous ({{ collection.products_count }})</button>
+      {%- for tag in collection.all_tags limit: 8 -%}
+        <a href="{{ collection.url }}/{{ tag | handle }}" class="filter-btn {% if current_tags contains tag %}active{% endif %}">
+          {{ tag }}
+        </a>
+      {%- endfor -%}
+    </div>
+
+    {%- comment -%} Sort + count {%- endcomment -%}
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:2rem;gap:1rem;flex-wrap:wrap;">
+      <span style="font-size:0.875rem;color:var(--color-text-muted);">
+        {{ collection.products_count }} produit{{ collection.products_count | pluralize: '', 's' }}
+      </span>
+      <div style="display:flex;align-items:center;gap:0.5rem;">
+        <label for="sort-by" style="font-size:0.875rem;color:var(--color-text-muted);">Trier par :</label>
+        <select id="sort-by"
+                style="background:var(--color-bg-card);border:1px solid var(--color-border);border-radius:var(--radius-full);padding:0.5rem 1rem;color:var(--color-text);font-size:0.875rem;cursor:pointer;outline:none;"
+                onchange="location.href=this.value">
+          <option value="{{ collection.url }}?sort_by=manual" {% if collection.sort_by == 'manual' %}selected{% endif %}>Sélection</option>
+          <option value="{{ collection.url }}?sort_by=best-selling" {% if collection.sort_by == 'best-selling' %}selected{% endif %}>Meilleures ventes</option>
+          <option value="{{ collection.url }}?sort_by=price-ascending" {% if collection.sort_by == 'price-ascending' %}selected{% endif %}>Prix croissant</option>
+          <option value="{{ collection.url }}?sort_by=price-descending" {% if collection.sort_by == 'price-descending' %}selected{% endif %}>Prix décroissant</option>
+          <option value="{{ collection.url }}?sort_by=created-descending" {% if collection.sort_by == 'created-descending' %}selected{% endif %}>Nouveautés</option>
+        </select>
+      </div>
+    </div>
+
+    {%- comment -%} Product grid {%- endcomment -%}
+    {%- if collection.products.size > 0 -%}
+      <div class="product-cards-grid">
+        {%- for product in collection.products -%}
+          {% render 'product-card', product: product %}
+        {%- endfor -%}
+      </div>
+
+      {%- comment -%} Pagination {%- endcomment -%}
+      {%- if paginate.pages > 1 -%}
+        <div style="display:flex;justify-content:center;align-items:center;gap:0.75rem;margin-top:3rem;flex-wrap:wrap;">
+          {%- if paginate.previous -%}
+            <a href="{{ paginate.previous.url }}" class="btn btn-secondary btn-sm">← Précédent</a>
+          {%- endif -%}
+          {%- for part in paginate.parts -%}
+            {%- if part.is_link -%}
+              <a href="{{ part.url }}"
+                 style="width:40px;height:40px;display:flex;align-items:center;justify-content:center;border-radius:50%;background:var(--color-bg-card);border:1px solid var(--color-border);color:var(--color-text-muted);font-size:0.875rem;transition:all 0.2s;"
+                 onmouseover="this.style.borderColor='var(--color-green)';this.style.color='var(--color-green)'"
+                 onmouseout="this.style.borderColor='var(--color-border)';this.style.color='var(--color-text-muted)'">
+                {{ part.title }}
+              </a>
+            {%- elsif part.title == paginate.current_page -%}
+              <span style="width:40px;height:40px;display:flex;align-items:center;justify-content:center;border-radius:50%;background:var(--color-green);color:#050807;font-size:0.875rem;font-weight:700;">{{ part.title }}</span>
+            {%- else -%}
+              <span style="color:var(--color-text-dim);">{{ part.title }}</span>
+            {%- endif -%}
+          {%- endfor -%}
+          {%- if paginate.next -%}
+            <a href="{{ paginate.next.url }}" class="btn btn-secondary btn-sm">Suivant →</a>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+
+    {%- else -%}
+      <div class="text-center" style="padding:4rem 0;">
+        <p style="font-size:4rem;margin-bottom:1.5rem;" aria-hidden="true">🔍</p>
+        <h2 style="font-size:1.5rem;margin-bottom:0.75rem;">Aucun produit trouvé</h2>
+        <p style="color:var(--color-text-muted);margin-bottom:2rem;">Essayez de modifier vos filtres ou explorez notre catalogue complet.</p>
+        <a href="{{ routes.all_products_collection_url }}" class="btn btn-primary">Voir tous les produits</a>
+      </div>
+    {%- endif -%}
+
+  </div>
+</div>
+{%- endpaginate -%}
+
+{% schema %}
+{
+  "name": "Page collection",
+  "settings": [
+    {
+      "type": "range",
+      "id": "products_per_page",
+      "label": "Produits par page",
+      "min": 6,
+      "max": 24,
+      "step": 3,
+      "default": 12
+    }
+  ],
+  "presets": [
+    {
+      "name": "Page collection"
+    }
+  ]
+}
+{% endschema %}

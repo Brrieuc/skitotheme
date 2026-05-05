@@ -1,0 +1,192 @@
+<section class="section featured-product" id="featured-product" aria-labelledby="featured-product-heading">
+  <div class="container">
+
+    <div class="text-center fade-in" style="margin-bottom:3rem;">
+      <p class="section-label">{{ section.settings.label }}</p>
+      <h2 class="section-title" id="featured-product-heading">{{ section.settings.title }}</h2>
+      <p class="section-subtitle">{{ section.settings.subtitle }}</p>
+    </div>
+
+    {%- assign fp = section.settings.product -%}
+    {%- if fp != blank -%}
+
+    <div class="featured-product-inner">
+
+      {%- comment -%} Gallery {%- endcomment -%}
+      <div class="product-gallery fade-in">
+        <div class="product-gallery-main">
+          {%- if fp.featured_image != blank -%}
+            <img src="{{ fp.featured_image | image_url: width: 800 }}"
+                 alt="{{ fp.featured_image.alt | escape | default: fp.title }}"
+                 id="fp-main-img"
+                 width="800"
+                 loading="lazy">
+          {%- else -%}
+            <div style="display:flex;align-items:center;justify-content:center;height:100%;font-size:5rem;">⚡</div>
+          {%- endif -%}
+        </div>
+
+        {%- if fp.images.size > 1 -%}
+          <div class="product-gallery-thumbs">
+            {%- for img in fp.images limit: 5 -%}
+              <button class="product-gallery-thumb {% if forloop.first %}active{% endif %}"
+                      data-src="{{ img | image_url: width: 800 }}"
+                      aria-label="Image {{ forloop.index }}">
+                <img src="{{ img | image_url: width: 144 }}"
+                     alt="{{ img.alt | escape | default: fp.title }}"
+                     width="72"
+                     height="72"
+                     loading="lazy">
+              </button>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      </div>
+
+      {%- comment -%} Product Info {%- endcomment -%}
+      <div class="product-info fade-in fade-in-delay-1">
+
+        <div class="product-rating">
+          <div class="stars" aria-label="Note: 5/5">★★★★★</div>
+          <span class="review-count">{{ section.settings.review_count }} avis</span>
+        </div>
+
+        <h2 class="product-title">{{ fp.title }}</h2>
+        <p class="product-tagline">{{ section.settings.product_tagline | default: fp.description | strip_html | truncate: 120 }}</p>
+
+        <div class="product-price-area">
+          <span class="product-price">{{ fp.price | money }}</span>
+          {%- if fp.compare_at_price > fp.price -%}
+            <span class="product-price-compare">{{ fp.compare_at_price | money }}</span>
+            <span class="product-price-save">
+              -{{ fp.compare_at_price | minus: fp.price | times: 100.0 | divided_by: fp.compare_at_price | round }}%
+            </span>
+          {%- endif -%}
+        </div>
+
+        <ul class="product-bullets" role="list">
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'bullet' -%}
+              <li class="product-bullet" {{ block.shopify_attributes }}>
+                <span class="product-bullet-icon" aria-hidden="true">✓</span>
+                <span>{{ block.settings.text }}</span>
+              </li>
+            {%- endif -%}
+          {%- endfor -%}
+        </ul>
+
+        {%- form 'product', fp, class: 'atc-form product-atc-area' -%}
+          <input type="hidden" name="id" value="{{ fp.selected_or_first_available_variant.id }}">
+
+          <div class="quantity-selector">
+            <button type="button" class="quantity-btn" data-action="minus" aria-label="Diminuer la quantité">−</button>
+            <input type="number" name="quantity" value="1" min="1" max="99" class="quantity-input" aria-label="Quantité" data-line>
+            <button type="button" class="quantity-btn" data-action="plus" aria-label="Augmenter la quantité">+</button>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-lg btn-full" data-original-text="Ajouter au panier">
+            Ajouter au panier
+          </button>
+        {%- endform -%}
+
+        <div class="trust-badges-row">
+          <span class="trust-badge">
+            <span class="trust-badge-icon" aria-hidden="true">🚚</span>
+            Livraison offerte dès 49€
+          </span>
+          <span class="trust-badge">
+            <span class="trust-badge-icon" aria-hidden="true">↩️</span>
+            30j satisfait ou remboursé
+          </span>
+          <span class="trust-badge">
+            <span class="trust-badge-icon" aria-hidden="true">🔒</span>
+            Paiement sécurisé
+          </span>
+        </div>
+
+        <div class="delivery-info">
+          <span class="delivery-icon" aria-hidden="true">📦</span>
+          <span class="delivery-text">
+            <strong>Expédition sous 24h</strong> — Livraison en 3-5 jours ouvrés
+          </span>
+        </div>
+
+      </div>
+
+    </div>
+
+    {%- else -%}
+      <p class="text-center text-muted">Sélectionnez un produit dans les paramètres de la section.</p>
+    {%- endif -%}
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Produit en vedette",
+  "settings": [
+    {
+      "type": "text",
+      "id": "label",
+      "label": "Label",
+      "default": "Produit phare"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Titre",
+      "default": "Le Skito Pro Shield"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Sous-titre",
+      "default": "La protection anti-moustiques la plus avancée du marché, conçue pour s'adapter à votre quotidien."
+    },
+    {
+      "type": "product",
+      "id": "product",
+      "label": "Produit"
+    },
+    {
+      "type": "text",
+      "id": "product_tagline",
+      "label": "Tagline produit",
+      "default": "Protection intelligente et rechargeable pour l'extérieur"
+    },
+    {
+      "type": "text",
+      "id": "review_count",
+      "label": "Nombre d'avis",
+      "default": "247"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "bullet",
+      "name": "Point fort",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Texte",
+          "default": "Protection efficace jusqu'à 12h d'affilée"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Produit en vedette",
+      "blocks": [
+        { "type": "bullet", "settings": { "text": "Protection efficace jusqu'à 12h d'affilée" } },
+        { "type": "bullet", "settings": { "text": "Sans spray, sans contact direct sur la peau" } },
+        { "type": "bullet", "settings": { "text": "Format compact — voyage, camping, terrasse" } },
+        { "type": "bullet", "settings": { "text": "Rechargeable via USB-C, batterie longue durée" } },
+        { "type": "bullet", "settings": { "text": "Testé et approuvé par 5000+ utilisateurs" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

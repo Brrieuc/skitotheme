@@ -1,0 +1,135 @@
+<footer class="site-footer" role="contentinfo">
+  <div class="container">
+    <div class="footer-inner">
+
+      {%- comment -%} Brand column {%- endcomment -%}
+      <div class="footer-brand">
+        <a href="{{ routes.root_url }}" class="footer-logo" aria-label="{{ shop.name }}">
+          <div class="logo-icon" aria-hidden="true">⚡</div>
+          {{ shop.name }}
+        </a>
+        <p class="footer-tagline">{{ section.settings.tagline }}</p>
+        <div class="footer-socials">
+          {%- if section.settings.instagram_url != blank -%}
+            <a href="{{ section.settings.instagram_url }}" class="footer-social" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+              </svg>
+            </a>
+          {%- endif -%}
+          {%- if section.settings.tiktok_url != blank -%}
+            <a href="{{ section.settings.tiktok_url }}" class="footer-social" aria-label="TikTok" target="_blank" rel="noopener noreferrer">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.32 6.32 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.88a8.17 8.17 0 004.84 1.57V7.03a4.85 4.85 0 01-1.07-.34z"/>
+              </svg>
+            </a>
+          {%- endif -%}
+          {%- if section.settings.facebook_url != blank -%}
+            <a href="{{ section.settings.facebook_url }}" class="footer-social" aria-label="Facebook" target="_blank" rel="noopener noreferrer">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+              </svg>
+            </a>
+          {%- endif -%}
+        </div>
+      </div>
+
+      {%- comment -%} Navigation columns {%- endcomment -%}
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'link_list' -%}
+          <div class="footer-col" {{ block.shopify_attributes }}>
+            <h3 class="footer-col-title">{{ block.settings.heading }}</h3>
+            <ul class="footer-links" role="list">
+              {%- for link in block.settings.menu.links -%}
+                <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+              {%- endfor -%}
+            </ul>
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+
+    </div>
+
+    <div class="neon-divider"></div>
+
+    <div class="footer-bottom">
+      <p class="footer-copyright">
+        © {{ 'now' | date: '%Y' }} {{ shop.name }}. {{ section.settings.copyright_text }}
+      </p>
+      <div class="footer-payments" aria-label="Moyens de paiement acceptés">
+        <span class="payment-icon">VISA</span>
+        <span class="payment-icon">MC</span>
+        <span class="payment-icon">AMEX</span>
+        <span class="payment-icon">PAYPAL</span>
+        {%- for type in shop.enabled_payment_types -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Footer",
+  "class": "section-footer",
+  "settings": [
+    {
+      "type": "text",
+      "id": "tagline",
+      "label": "Tagline de marque",
+      "default": "La protection anti-moustiques nouvelle génération. Profitez de l'extérieur sans compromis."
+    },
+    {
+      "type": "url",
+      "id": "instagram_url",
+      "label": "Lien Instagram"
+    },
+    {
+      "type": "url",
+      "id": "tiktok_url",
+      "label": "Lien TikTok"
+    },
+    {
+      "type": "url",
+      "id": "facebook_url",
+      "label": "Lien Facebook"
+    },
+    {
+      "type": "text",
+      "id": "copyright_text",
+      "label": "Texte copyright",
+      "default": "Tous droits réservés."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "link_list",
+      "name": "Colonne de liens",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Titre de la colonne",
+          "default": "Liens"
+        },
+        {
+          "type": "link_list",
+          "id": "menu",
+          "label": "Menu",
+          "default": "footer"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Footer",
+      "blocks": [
+        { "type": "link_list" },
+        { "type": "link_list" },
+        { "type": "link_list" }
+      ]
+    }
+  ]
+}
+{% endschema %}

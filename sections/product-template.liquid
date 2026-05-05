@@ -1,0 +1,336 @@
+{%- assign current_product = product -%}
+
+<div class="product-page section">
+  <div class="container">
+    <div class="product-page-inner">
+
+      {%- comment -%} Gallery {%- endcomment -%}
+      <div class="product-gallery fade-in">
+        <div class="product-gallery-main">
+          {%- if current_product.featured_image != blank -%}
+            <img src="{{ current_product.featured_image | image_url: width: 900 }}"
+                 alt="{{ current_product.featured_image.alt | escape | default: current_product.title }}"
+                 id="product-main-img"
+                 width="900"
+                 loading="eager">
+          {%- else -%}
+            <div style="display:flex;align-items:center;justify-content:center;width:100%;height:100%;font-size:6rem;aspect-ratio:1">⚡</div>
+          {%- endif -%}
+        </div>
+
+        {%- if current_product.images.size > 1 -%}
+          <div class="product-gallery-thumbs">
+            {%- for img in current_product.images limit: 6 -%}
+              <button class="product-gallery-thumb {% if forloop.first %}active{% endif %}"
+                      data-src="{{ img | image_url: width: 900 }}"
+                      aria-label="Voir l'image {{ forloop.index }}">
+                <img src="{{ img | image_url: width: 144 }}"
+                     alt="{{ img.alt | escape | default: current_product.title }}"
+                     width="72" height="72"
+                     loading="lazy">
+              </button>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      </div>
+
+      {%- comment -%} Sidebar {%- endcomment -%}
+      <div class="product-sticky-sidebar fade-in fade-in-delay-1">
+
+        {%- comment -%} Scarcity {%- endcomment -%}
+        {%- if section.settings.show_scarcity -%}
+          <div class="scarcity-bar">
+            <div class="scarcity-dot"></div>
+            <span class="scarcity-text">
+              <strong>{{ section.settings.scarcity_text }}</strong>
+            </span>
+          </div>
+        {%- endif -%}
+
+        {%- comment -%} Rating {%- endcomment -%}
+        <div class="product-rating">
+          <div class="stars" aria-label="Note: 5 sur 5">★★★★★</div>
+          <span class="review-count">{{ section.settings.review_count | default: '247' }} avis</span>
+          <span class="badge badge-green" style="font-size:0.65rem;">✓ Achat vérifié</span>
+        </div>
+
+        <h1 class="product-title">{{ current_product.title }}</h1>
+
+        {%- if current_product.description != blank -%}
+          <p class="product-tagline">{{ current_product.description | strip_html | truncate: 140 }}</p>
+        {%- endif -%}
+
+        {%- comment -%} Price {%- endcomment -%}
+        <div class="product-price-area" id="product-price">
+          <span class="product-price" id="product-price-value">
+            {{ current_product.selected_or_first_available_variant.price | money }}
+          </span>
+          {%- if current_product.compare_at_price > current_product.price -%}
+            <span class="product-price-compare">{{ current_product.compare_at_price | money }}</span>
+            <span class="product-price-save">
+              -{{ current_product.compare_at_price | minus: current_product.price | times: 100.0 | divided_by: current_product.compare_at_price | round }}%
+            </span>
+          {%- endif -%}
+        </div>
+
+        {%- comment -%} Variants {%- endcomment -%}
+        {%- unless current_product.has_only_default_variant -%}
+          {%- for option in current_product.options_with_values -%}
+            <div style="margin-bottom:1.25rem;">
+              <label style="font-size:0.85rem;font-weight:600;color:var(--color-text-muted);display:block;margin-bottom:0.5rem;">
+                {{ option.name }}
+              </label>
+              <div style="display:flex;flex-wrap:wrap;gap:0.5rem;">
+                {%- for value in option.values -%}
+                  <label style="cursor:pointer;">
+                    <input type="radio"
+                           name="option-{{ forloop.parentloop.index }}"
+                           value="{{ value }}"
+                           {% if option.selected_value == value %}checked{% endif %}
+                           style="position:absolute;opacity:0;width:0;height:0;"
+                           class="variant-option">
+                    <span style="display:inline-flex;align-items:center;padding:0.375rem 1rem;border-radius:9999px;font-size:0.875rem;font-weight:500;border:1px solid;cursor:pointer;transition:all 0.2s;background:var(--color-bg-card);border-color:var(--color-border);color:var(--color-text-muted);"
+                          class="variant-swatch {% if option.selected_value == value %}active-variant{% endif %}">
+                      {{ value }}
+                    </span>
+                  </label>
+                {%- endfor -%}
+              </div>
+            </div>
+          {%- endfor -%}
+        {%- endunless -%}
+
+        {%- comment -%} ATC Form {%- endcomment -%}
+        {%- form 'product', current_product, class: 'atc-form product-atc-area', id: 'product-form' -%}
+          <input type="hidden" name="id" value="{{ current_product.selected_or_first_available_variant.id }}">
+
+          <div class="quantity-selector">
+            <button type="button" class="quantity-btn" data-action="minus" aria-label="Diminuer">−</button>
+            <input type="number" name="quantity" value="1" min="1" max="99" class="quantity-input" aria-label="Quantité">
+            <button type="button" class="quantity-btn" data-action="plus" aria-label="Augmenter">+</button>
+          </div>
+
+          {%- if current_product.available -%}
+            <button type="submit" class="btn btn-primary btn-lg btn-full" data-original-text="{{ 'products.product.add_to_cart' | t }}">
+              {{ 'products.product.add_to_cart' | t }}
+            </button>
+          {%- else -%}
+            <button type="button" class="btn btn-secondary btn-lg btn-full" disabled>
+              {{ 'products.product.sold_out' | t }}
+            </button>
+          {%- endif -%}
+        {%- endform -%}
+
+        {%- comment -%} Benefit bullets {%- endcomment -%}
+        <ul class="product-bullets" style="margin-top:0.5rem;" role="list">
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'bullet' -%}
+              <li class="product-bullet" {{ block.shopify_attributes }}>
+                <span class="product-bullet-icon" aria-hidden="true">✓</span>
+                {{ block.settings.text }}
+              </li>
+            {%- endif -%}
+          {%- endfor -%}
+        </ul>
+
+        {%- comment -%} Trust badges row {%- endcomment -%}
+        <div class="trust-badges-row">
+          <span class="trust-badge"><span class="trust-badge-icon" aria-hidden="true">🚚</span>Livraison offerte dès 49€</span>
+          <span class="trust-badge"><span class="trust-badge-icon" aria-hidden="true">↩️</span>30j satisfait ou remboursé</span>
+          <span class="trust-badge"><span class="trust-badge-icon" aria-hidden="true">🔒</span>Paiement sécurisé</span>
+        </div>
+
+        {%- comment -%} Delivery info {%- endcomment -%}
+        <div class="delivery-info">
+          <span class="delivery-icon" aria-hidden="true">📦</span>
+          <span class="delivery-text">
+            <strong>Expédition sous 24h</strong> — Livraison en 3-5 jours ouvrés
+          </span>
+        </div>
+
+        {%- comment -%} Guarantee block {%- endcomment -%}
+        <div class="guarantee-block">
+          <h3 class="guarantee-title">
+            <span aria-hidden="true">🛡️</span>
+            Nos garanties
+          </h3>
+          <ul class="guarantees-list" role="list">
+            {%- for block in section.blocks -%}
+              {%- if block.type == 'guarantee' -%}
+                <li class="guarantee-item" {{ block.shopify_attributes }}>
+                  <span class="guarantee-icon" aria-hidden="true">{{ block.settings.icon }}</span>
+                  <span class="guarantee-text">{{ block.settings.text }}</span>
+                </li>
+              {%- endif -%}
+            {%- endfor -%}
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+{%- comment -%} Description full {%- endcomment -%}
+{%- if current_product.description != blank -%}
+  <section class="section" style="background:var(--color-bg-2);">
+    <div class="container">
+      <div style="max-width:800px;margin:0 auto;">
+        <p class="section-label">À propos du produit</p>
+        <div class="product-description fade-in" style="color:var(--color-text-muted);line-height:1.8;">
+          {{ current_product.description }}
+        </div>
+      </div>
+    </div>
+  </section>
+{%- endif -%}
+
+{%- comment -%} FAQ inline {%- endcomment -%}
+{%- assign has_faq = false -%}
+{%- for block in section.blocks -%}
+  {%- if block.type == 'faq' -%}
+    {%- assign has_faq = true -%}
+    {%- break -%}
+  {%- endif -%}
+{%- endfor -%}
+
+{%- if has_faq -%}
+  <section class="section" id="product-faq">
+    <div class="container">
+      <div class="text-center fade-in" style="margin-bottom:2rem;">
+        <p class="section-label">FAQ</p>
+        <h2 class="section-title" style="font-size:1.75rem;">Questions sur ce produit</h2>
+      </div>
+      <div class="faq-list" style="max-width:760px;margin:0 auto;" role="list">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'faq' -%}
+            <div class="faq-item fade-in" role="listitem" {{ block.shopify_attributes }}>
+              <button class="faq-question" aria-expanded="false" aria-controls="pfaq-{{ block.id }}">
+                {{ block.settings.question }}
+                <span class="faq-icon" aria-hidden="true">+</span>
+              </button>
+              <div class="faq-answer" id="pfaq-{{ block.id }}" role="region">
+                <div class="faq-answer-inner">{{ block.settings.answer }}</div>
+              </div>
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  </section>
+{%- endif -%}
+
+{%- comment -%} Sticky ATC for mobile {%- endcomment -%}
+<div class="sticky-atc" role="complementary" aria-label="Achat rapide">
+  <div class="sticky-atc-info">
+    <div class="sticky-atc-name">{{ current_product.title }}</div>
+    <div class="sticky-atc-price">{{ current_product.price | money }}</div>
+  </div>
+  <button class="btn btn-primary sticky-atc-btn"
+          onclick="document.getElementById('product-form').dispatchEvent(new Event('submit'))">
+    Ajouter au panier
+  </button>
+</div>
+
+<style>
+  .active-variant {
+    background: rgba(140,255,102,0.1) !important;
+    border-color: var(--color-green) !important;
+    color: var(--color-green) !important;
+  }
+  .variant-swatch:hover {
+    border-color: var(--color-green);
+    color: var(--color-green);
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Page produit",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_scarcity",
+      "label": "Afficher l'indicateur de stock",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "scarcity_text",
+      "label": "Texte de stock",
+      "default": "Plus que 8 unités en stock — commandez avant épuisement"
+    },
+    {
+      "type": "text",
+      "id": "review_count",
+      "label": "Nombre d'avis",
+      "default": "247"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "bullet",
+      "name": "Point fort",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Texte",
+          "default": "Protection efficace jusqu'à 12h"
+        }
+      ]
+    },
+    {
+      "type": "guarantee",
+      "name": "Garantie",
+      "settings": [
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "Icône / Emoji",
+          "default": "✓"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Texte",
+          "default": "<strong>30 jours satisfait</strong> ou remboursé sans condition"
+        }
+      ]
+    },
+    {
+      "type": "faq",
+      "name": "FAQ produit",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "Comment utiliser Skito ?"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "Réponse",
+          "default": "<p>Chargez l'appareil via le câble USB-C fourni, puis appuyez sur le bouton d'activation. Placez Skito à proximité et profitez d'une zone protégée.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Page produit",
+      "blocks": [
+        { "type": "bullet", "settings": { "text": "Protection efficace jusqu'à 12h" } },
+        { "type": "bullet", "settings": { "text": "Sans spray, sans contact sur la peau" } },
+        { "type": "bullet", "settings": { "text": "Format compact et rechargeable USB-C" } },
+        { "type": "bullet", "settings": { "text": "Testé et approuvé par 5000+ utilisateurs" } },
+        { "type": "guarantee", "settings": { "icon": "↩️", "text": "<strong>30 jours satisfait</strong> ou remboursé sans condition" } },
+        { "type": "guarantee", "settings": { "icon": "🚚", "text": "<strong>Livraison offerte</strong> dès 49€ d'achat" } },
+        { "type": "guarantee", "settings": { "icon": "🔒", "text": "<strong>Paiement sécurisé</strong> SSL — Visa, Mastercard, PayPal" } },
+        { "type": "guarantee", "settings": { "icon": "🏆", "text": "<strong>Qualité garantie</strong> — 2 ans de garantie fabricant" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

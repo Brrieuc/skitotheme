@@ -1,0 +1,11 @@
+{
+  "sections": {
+    "collection-template": {
+      "type": "collection-template",
+      "settings": {
+        "products_per_page": 12
+      }
+    }
+  },
+  "order": ["collection-template"]
+}

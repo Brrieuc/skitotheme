@@ -1,0 +1,84 @@
+{
+  "general": {
+    "meta": {
+      "page": "Page {{ page }}"
+    },
+    "search": {
+      "placeholder": "Search...",
+      "submit": "Search",
+      "no_results": "No results for \"{{ terms }}\""
+    }
+  },
+  "accessibility": {
+    "skip_to_content": "Skip to main content",
+    "nav_label": "Main navigation"
+  },
+  "sections": {
+    "cart": {
+      "title": "Cart",
+      "empty": "Your cart is empty",
+      "checkout": "Checkout",
+      "continue_shopping": "Continue shopping",
+      "subtotal": "Subtotal",
+      "total": "Total",
+      "taxes_included": "Tax included",
+      "shipping_calculated_at_checkout": "Shipping calculated at checkout"
+    },
+    "header": {
+      "cart_count": {
+        "one": "{{ count }} item",
+        "other": "{{ count }} items"
+      }
+    }
+  },
+  "products": {
+    "product": {
+      "add_to_cart": "Add to cart",
+      "sold_out": "Sold out",
+      "unavailable": "Unavailable",
+      "quantity": "Quantity",
+      "price": "Price",
+      "sale": "Sale",
+      "on_sale": "On sale",
+      "from_price": "From {{ price }}",
+      "vendor": "Vendor"
+    },
+    "general": {
+      "review": {
+        "one": "{{ count }} review",
+        "other": "{{ count }} reviews"
+      }
+    }
+  },
+  "customer": {
+    "account": {
+      "title": "My account"
+    },
+    "login": {
+      "title": "Login"
+    }
+  },
+  "cart": {
+    "general": {
+      "title": "Cart",
+      "items_count": {
+        "one": "{{ count }} item",
+        "other": "{{ count }} items"
+      }
+    }
+  },
+  "collections": {
+    "general": {
+      "see_all": "See all",
+      "products_count": {
+        "one": "{{ count }} product",
+        "other": "{{ count }} products"
+      }
+    }
+  },
+  "layout": {
+    "footer": {
+      "copyright": "© {{ year }} {{ shop_name }}. All rights reserved."
+    }
+  }
+}

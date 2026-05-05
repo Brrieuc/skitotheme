@@ -1,0 +1,49 @@
+{
+  "sections": {
+    "product-template": {
+      "type": "product-template",
+      "blocks": {
+        "b1": { "type": "bullet", "settings": { "text": "Protection efficace jusqu'à 12h d'affilée" } },
+        "b2": { "type": "bullet", "settings": { "text": "Sans spray, sans contact direct sur la peau" } },
+        "b3": { "type": "bullet", "settings": { "text": "Format compact — voyage, camping, terrasse" } },
+        "b4": { "type": "bullet", "settings": { "text": "Rechargeable via USB-C, batterie longue durée" } },
+        "b5": { "type": "bullet", "settings": { "text": "Testé et approuvé par 5000+ utilisateurs" } },
+        "g1": { "type": "guarantee", "settings": { "icon": "↩️", "text": "<strong>30 jours satisfait</strong> ou remboursé sans condition" } },
+        "g2": { "type": "guarantee", "settings": { "icon": "🚚", "text": "<strong>Livraison offerte</strong> dès 49€ d'achat" } },
+        "g3": { "type": "guarantee", "settings": { "icon": "🔒", "text": "<strong>Paiement sécurisé</strong> SSL — Visa, Mastercard, PayPal" } },
+        "g4": { "type": "guarantee", "settings": { "icon": "🏆", "text": "<strong>Qualité garantie</strong> — 2 ans de garantie fabricant" } },
+        "faq1": { "type": "faq", "settings": { "question": "Comment utiliser Skito ?", "answer": "<p>Chargez l'appareil via le câble USB-C fourni, puis appuyez sur le bouton d'activation. Placez-le à proximité et profitez d'une zone protégée jusqu'à 12h.</p>" } },
+        "faq2": { "type": "faq", "settings": { "question": "Quelle portée de protection ?", "answer": "<p>Skito protège efficacement dans un rayon de 3 à 5 mètres selon les conditions. En espace fermé ou sous abri, la protection peut atteindre jusqu'à 20m².</p>" } },
+        "faq3": { "type": "faq", "settings": { "question": "Combien de temps pour livrer ?", "answer": "<p>Toutes les commandes sont expédiées sous 24h ouvrées. La livraison standard prend 3 à 5 jours ouvrés en France métropolitaine.</p>" } }
+      },
+      "block_order": ["b1", "b2", "b3", "b4", "b5", "g1", "g2", "g3", "g4", "faq1", "faq2", "faq3"],
+      "settings": {
+        "show_scarcity": true,
+        "scarcity_text": "Plus que 8 unités en stock — commandez avant épuisement",
+        "review_count": "247"
+      }
+    },
+    "product-reviews": {
+      "type": "reviews",
+      "blocks": {
+        "pr1": { "type": "review", "settings": { "name": "Sophie M.", "date": "Avril 2025", "rating": 5, "title": "Enfin une vraie protection !", "text": "On l'a testé lors d'un séjour en Corse. Aucune piqûre de toute la semaine, même le soir en terrasse. Je ne pars plus sans mon Skito." } },
+        "pr2": { "type": "review", "settings": { "name": "Thomas R.", "date": "Mars 2025", "rating": 5, "title": "Discret et ultra efficace", "text": "Je suis très sceptique avec ce genre de produits, mais Skito m'a convaincu. Compact, rechargeable et vraiment efficace. Parfait pour les soirées jardin." } },
+        "pr3": { "type": "review", "settings": { "name": "Camille D.", "date": "Mai 2025", "rating": 5, "title": "Le meilleur achat de l'été", "text": "Idéal pour voyager ! Je l'emmène partout depuis mon retour du Portugal. Très bonne autonomie et facile à utiliser. Design super stylé aussi." } }
+      },
+      "block_order": ["pr1", "pr2", "pr3"],
+      "settings": {
+        "label": "Avis vérifiés",
+        "title": "Ce qu'ils pensent de Skito",
+        "subtitle": "",
+        "score": "4.9",
+        "total_reviews": "247",
+        "pct_5": 87,
+        "pct_4": 9,
+        "pct_3": 3,
+        "pct_2": 1,
+        "pct_1": 0
+      }
+    }
+  },
+  "order": ["product-template", "product-reviews"]
+}

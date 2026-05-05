@@ -1,0 +1,112 @@
+<section class="section" id="benefits" aria-labelledby="benefits-heading">
+  <div class="container">
+
+    <div class="text-center fade-in">
+      <p class="section-label">{{ section.settings.label }}</p>
+      <h2 class="section-title" id="benefits-heading">{{ section.settings.title }}</h2>
+      <p class="section-subtitle">{{ section.settings.subtitle }}</p>
+    </div>
+
+    <div class="benefits-grid">
+      {%- for block in section.blocks -%}
+        <div class="benefit-card glass-card fade-in fade-in-delay-{{ forloop.index }}" {{ block.shopify_attributes }}>
+          <div class="benefit-icon" aria-hidden="true">{{ block.settings.icon }}</div>
+          <h3 class="benefit-title">{{ block.settings.title }}</h3>
+          <p class="benefit-desc">{{ block.settings.description }}</p>
+        </div>
+      {%- endfor -%}
+    </div>
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Avantages",
+  "settings": [
+    {
+      "type": "text",
+      "id": "label",
+      "label": "Label de section",
+      "default": "Pourquoi Skito"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Titre",
+      "default": "Conçu pour votre mode de vie extérieur"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Sous-titre",
+      "default": "Skito s'adapte à chaque situation — de la terrasse au trek, de la nuit en camping au voyage lointain."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "benefit",
+      "name": "Avantage",
+      "settings": [
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "Emoji / icône",
+          "default": "🛡️"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Titre",
+          "default": "Protection extérieure"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description",
+          "default": "Efficace en plein air, même par vent léger. Idéal pour terrasses, jardins et soirées d'été."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Avantages",
+      "blocks": [
+        {
+          "type": "benefit",
+          "settings": {
+            "icon": "🛡️",
+            "title": "Protection extérieure",
+            "description": "Efficace en plein air, même par vent léger. Idéal pour terrasses, jardins et soirées d'été."
+          }
+        },
+        {
+          "type": "benefit",
+          "settings": {
+            "icon": "🎒",
+            "title": "Format nomade",
+            "description": "Ultra-compact, il tient dans une poche. Partez en voyage, camping ou festival sans contrainte."
+          }
+        },
+        {
+          "type": "benefit",
+          "settings": {
+            "icon": "✨",
+            "title": "Sans spray collant",
+            "description": "Pas de produit sur la peau. Une technologie propre, discrète et respectueuse de votre confort."
+          }
+        },
+        {
+          "type": "benefit",
+          "settings": {
+            "icon": "⚡",
+            "title": "Rechargeable USB",
+            "description": "Batterie intégrée rechargeable. Un investissement unique pour une protection renouvelable."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

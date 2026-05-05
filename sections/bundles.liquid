@@ -1,0 +1,252 @@
+<section class="section bundles" id="bundles" aria-labelledby="bundles-heading">
+  <div class="container">
+
+    <div class="text-center fade-in">
+      <p class="section-label">{{ section.settings.label }}</p>
+      <h2 class="section-title" id="bundles-heading">{{ section.settings.title }}</h2>
+      <p class="section-subtitle">{{ section.settings.subtitle }}</p>
+    </div>
+
+    <div class="bundles-grid">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'bundle' -%}
+          <div class="bundle-card glass-card fade-in fade-in-delay-{{ forloop.index }} {% if block.settings.featured %}featured{% endif %}"
+               data-bundle="{{ block.id }}"
+               data-variant="{{ block.settings.variant_id }}"
+               data-qty="{{ block.settings.quantity }}"
+               {{ block.shopify_attributes }}>
+
+            {%- if block.settings.featured -%}
+              <span class="bundle-badge">⭐ {{ block.settings.featured_label }}</span>
+            {%- endif -%}
+
+            <div class="bundle-name">{{ block.settings.name }}</div>
+            <div class="bundle-description">{{ block.settings.description }}</div>
+
+            <div class="bundle-price-area">
+              <span class="bundle-price">{{ block.settings.price }}</span>
+              {%- if block.settings.compare_price != blank -%}
+                <span class="bundle-price-compare">{{ block.settings.compare_price }}</span>
+              {%- endif -%}
+              <div style="margin-top:0.25rem;">
+                <span class="badge badge-green">{{ block.settings.save_text }}</span>
+              </div>
+            </div>
+
+            <ul class="bundle-features" role="list">
+              {%- for i in (1..5) -%}
+                {%- assign feature_key = 'feature_' | append: i -%}
+                {%- assign feature_val = block.settings[feature_key] -%}
+                {%- if feature_val != blank -%}
+                  <li class="bundle-feature">
+                    <span class="bundle-feature-icon" aria-hidden="true">✓</span>
+                    {{ feature_val }}
+                  </li>
+                {%- endif -%}
+              {%- endfor -%}
+            </ul>
+
+            {%- if block.settings.variant_id != blank -%}
+              <button class="btn bundle-atc-btn btn-full {% if block.settings.featured %}btn-primary{% else %}btn-secondary{% endif %}"
+                      onclick="window.SkitoCart && window.SkitoCart.addToCart('{{ block.settings.variant_id }}', {{ block.settings.quantity | default: 1 }})">
+                {{ block.settings.cta_text | default: 'Ajouter au panier' }}
+              </button>
+            {%- else -%}
+              <a href="{{ block.settings.cta_url | default: routes.all_products_collection_url }}"
+                 class="btn btn-full {% if block.settings.featured %}btn-primary{% else %}btn-secondary{% endif %}">
+                {{ block.settings.cta_text | default: 'Voir le pack' }}
+              </a>
+            {%- endif -%}
+
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Packs / Bundles",
+  "settings": [
+    {
+      "type": "text",
+      "id": "label",
+      "label": "Label",
+      "default": "Nos offres"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Titre",
+      "default": "Choisissez votre pack de protection"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Sous-titre",
+      "default": "Seul, en famille ou pour toute la maison — il y a un Skito pour chaque besoin."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "bundle",
+      "name": "Pack",
+      "settings": [
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Nom du pack",
+          "default": "Pack Solo"
+        },
+        {
+          "type": "text",
+          "id": "description",
+          "label": "Description courte",
+          "default": "L'essentiel pour se protéger seul"
+        },
+        {
+          "type": "text",
+          "id": "price",
+          "label": "Prix affiché",
+          "default": "€29.90"
+        },
+        {
+          "type": "text",
+          "id": "compare_price",
+          "label": "Prix barré",
+          "default": "€39.90"
+        },
+        {
+          "type": "text",
+          "id": "save_text",
+          "label": "Texte économie",
+          "default": "Économisez 10€"
+        },
+        {
+          "type": "checkbox",
+          "id": "featured",
+          "label": "Mettre en avant",
+          "default": false
+        },
+        {
+          "type": "text",
+          "id": "featured_label",
+          "label": "Label si mis en avant",
+          "default": "Meilleure vente"
+        },
+        {
+          "type": "text",
+          "id": "feature_1",
+          "label": "Caractéristique 1",
+          "default": "1 appareil Skito Pro"
+        },
+        {
+          "type": "text",
+          "id": "feature_2",
+          "label": "Caractéristique 2",
+          "default": "Câble USB-C inclus"
+        },
+        {
+          "type": "text",
+          "id": "feature_3",
+          "label": "Caractéristique 3",
+          "default": "Livraison offerte"
+        },
+        {
+          "type": "text",
+          "id": "feature_4",
+          "label": "Caractéristique 4"
+        },
+        {
+          "type": "text",
+          "id": "feature_5",
+          "label": "Caractéristique 5"
+        },
+        {
+          "type": "text",
+          "id": "variant_id",
+          "label": "ID variante Shopify (pour ATC)"
+        },
+        {
+          "type": "range",
+          "id": "quantity",
+          "label": "Quantité",
+          "min": 1,
+          "max": 10,
+          "step": 1,
+          "default": 1
+        },
+        {
+          "type": "text",
+          "id": "cta_text",
+          "label": "Texte du bouton",
+          "default": "Choisir ce pack"
+        },
+        {
+          "type": "url",
+          "id": "cta_url",
+          "label": "Lien du bouton (si pas de variante)"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Packs / Bundles",
+      "blocks": [
+        {
+          "type": "bundle",
+          "settings": {
+            "name": "Pack Solo",
+            "description": "L'essentiel pour une protection nomade",
+            "price": "€29.90",
+            "compare_price": "€39.90",
+            "save_text": "Économisez 10€",
+            "featured": false,
+            "feature_1": "1 × Skito Pro Shield",
+            "feature_2": "Câble USB-C inclus",
+            "feature_3": "Livraison offerte",
+            "cta_text": "Choisir le Pack Solo"
+          }
+        },
+        {
+          "type": "bundle",
+          "settings": {
+            "name": "Pack Duo",
+            "description": "Protégez vous et votre partenaire",
+            "price": "€49.90",
+            "compare_price": "€69.80",
+            "save_text": "Économisez 20€",
+            "featured": true,
+            "featured_label": "Meilleure offre",
+            "feature_1": "2 × Skito Pro Shield",
+            "feature_2": "2 × Câbles USB-C",
+            "feature_3": "Pochette de transport offerte",
+            "feature_4": "Livraison offerte",
+            "cta_text": "Choisir le Pack Duo"
+          }
+        },
+        {
+          "type": "bundle",
+          "settings": {
+            "name": "Pack Famille",
+            "description": "Toute la famille protégée cet été",
+            "price": "€79.90",
+            "compare_price": "€119.70",
+            "save_text": "Économisez 40€",
+            "featured": false,
+            "feature_1": "4 × Skito Pro Shield",
+            "feature_2": "4 × Câbles USB-C",
+            "feature_3": "Pochette de transport premium",
+            "feature_4": "Livraison express offerte",
+            "feature_5": "Support prioritaire",
+            "cta_text": "Choisir le Pack Famille"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

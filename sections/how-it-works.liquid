@@ -1,0 +1,123 @@
+<section class="section" id="how-it-works" aria-labelledby="hiw-heading" style="background:var(--color-bg-2);">
+  <div class="container">
+
+    <div class="text-center fade-in">
+      <p class="section-label">{{ section.settings.label }}</p>
+      <h2 class="section-title" id="hiw-heading">{{ section.settings.title }}</h2>
+      <p class="section-subtitle">{{ section.settings.subtitle }}</p>
+    </div>
+
+    <div class="steps-grid">
+      {%- for block in section.blocks -%}
+        <div class="step-card glass-card fade-in fade-in-delay-{{ forloop.index }}" {{ block.shopify_attributes }}>
+          <div class="step-number" aria-label="Étape {{ forloop.index }}">{{ forloop.index }}</div>
+          <div class="step-icon" aria-hidden="true">{{ block.settings.icon }}</div>
+          <h3 class="step-title">{{ block.settings.title }}</h3>
+          <p class="step-desc">{{ block.settings.description }}</p>
+        </div>
+      {%- endfor -%}
+    </div>
+
+    {%- if section.settings.cta_text != blank -%}
+      <div class="text-center" style="margin-top:3rem;">
+        <a href="{{ section.settings.cta_url }}" class="btn btn-primary btn-lg fade-in">
+          {{ section.settings.cta_text }}
+        </a>
+      </div>
+    {%- endif -%}
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Comment ça marche",
+  "settings": [
+    {
+      "type": "text",
+      "id": "label",
+      "label": "Label",
+      "default": "Simple & efficace"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Titre",
+      "default": "En 3 étapes, vous êtes protégé"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Sous-titre",
+      "default": "Pas de mode d'emploi compliqué. Skito fonctionne immédiatement, partout où vous allez."
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "Bouton CTA (optionnel)"
+    },
+    {
+      "type": "url",
+      "id": "cta_url",
+      "label": "Lien CTA"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Étape",
+      "settings": [
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "Icône / Emoji",
+          "default": "⚡"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Titre de l'étape",
+          "default": "Chargez"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description",
+          "default": "Branchez Skito sur votre chargeur USB. En 2 heures, la batterie est pleine pour 12h d'autonomie."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Comment ça marche",
+      "blocks": [
+        {
+          "type": "step",
+          "settings": {
+            "icon": "⚡",
+            "title": "Chargez",
+            "description": "Branchez Skito sur n'importe quel port USB. En 2h, il est prêt pour une journée complète de protection."
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "icon": "▶️",
+            "title": "Activez",
+            "description": "Un seul bouton. Placez Skito à proximité — sur la table, le sol, ou fixez-le à votre sac. C'est tout."
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "icon": "🧘",
+            "title": "Profitez",
+            "description": "Détendez-vous. Skito crée une zone de protection invisible autour de vous. Zéro moustique, 100% sérénité."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

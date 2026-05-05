@@ -1,0 +1,84 @@
+{
+  "general": {
+    "meta": {
+      "page": "Page {{ page }}"
+    },
+    "search": {
+      "placeholder": "Rechercher...",
+      "submit": "Rechercher",
+      "no_results": "Aucun résultat pour \"{{ terms }}\""
+    }
+  },
+  "accessibility": {
+    "skip_to_content": "Passer au contenu principal",
+    "nav_label": "Navigation principale"
+  },
+  "sections": {
+    "cart": {
+      "title": "Panier",
+      "empty": "Votre panier est vide",
+      "checkout": "Passer la commande",
+      "continue_shopping": "Continuer mes achats",
+      "subtotal": "Sous-total",
+      "total": "Total",
+      "taxes_included": "Taxes incluses",
+      "shipping_calculated_at_checkout": "Les frais de livraison sont calculés lors du paiement"
+    },
+    "header": {
+      "cart_count": {
+        "one": "{{ count }} article",
+        "other": "{{ count }} articles"
+      }
+    }
+  },
+  "products": {
+    "product": {
+      "add_to_cart": "Ajouter au panier",
+      "sold_out": "Épuisé",
+      "unavailable": "Indisponible",
+      "quantity": "Quantité",
+      "price": "Prix",
+      "sale": "Solde",
+      "on_sale": "En promotion",
+      "from_price": "À partir de {{ price }}",
+      "vendor": "Vendeur"
+    },
+    "general": {
+      "review": {
+        "one": "{{ count }} avis",
+        "other": "{{ count }} avis"
+      }
+    }
+  },
+  "customer": {
+    "account": {
+      "title": "Mon compte"
+    },
+    "login": {
+      "title": "Connexion"
+    }
+  },
+  "cart": {
+    "general": {
+      "title": "Panier",
+      "items_count": {
+        "one": "{{ count }} article",
+        "other": "{{ count }} articles"
+      }
+    }
+  },
+  "collections": {
+    "general": {
+      "see_all": "Voir tout",
+      "products_count": {
+        "one": "{{ count }} produit",
+        "other": "{{ count }} produits"
+      }
+    }
+  },
+  "layout": {
+    "footer": {
+      "copyright": "© {{ year }} {{ shop_name }}. Tous droits réservés."
+    }
+  }
+}

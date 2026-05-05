@@ -1,0 +1,167 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Skito",
+    "theme_version": "1.0.0",
+    "theme_author": "Skito Brand",
+    "theme_documentation_url": "",
+    "theme_support_url": ""
+  },
+  {
+    "name": "Logo",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "logo",
+        "label": "Logo"
+      },
+      {
+        "type": "image_picker",
+        "id": "logo_dark",
+        "label": "Logo sombre (optionnel)"
+      },
+      {
+        "type": "range",
+        "id": "logo_width",
+        "min": 80,
+        "max": 240,
+        "step": 10,
+        "unit": "px",
+        "label": "Largeur du logo",
+        "default": 120
+      },
+      {
+        "type": "image_picker",
+        "id": "favicon",
+        "label": "Favicon"
+      }
+    ]
+  },
+  {
+    "name": "Couleurs",
+    "settings": [
+      {
+        "type": "color",
+        "id": "color_bg",
+        "label": "Couleur de fond principale",
+        "default": "#050807"
+      },
+      {
+        "type": "color",
+        "id": "color_green",
+        "label": "Couleur accent verte",
+        "default": "#8CFF66"
+      },
+      {
+        "type": "color",
+        "id": "color_cyan",
+        "label": "Couleur accent cyan",
+        "default": "#4DEBFF"
+      },
+      {
+        "type": "color",
+        "id": "color_text",
+        "label": "Couleur de texte principale",
+        "default": "#E8F0EC"
+      }
+    ]
+  },
+  {
+    "name": "Typographie",
+    "settings": [
+      {
+        "type": "font_picker",
+        "id": "font_body",
+        "label": "Police du corps de texte",
+        "default": "inter_n4"
+      },
+      {
+        "type": "font_picker",
+        "id": "font_heading",
+        "label": "Police des titres",
+        "default": "space_grotesk_n7"
+      }
+    ]
+  },
+  {
+    "name": "Réseaux sociaux",
+    "settings": [
+      {
+        "type": "url",
+        "id": "social_instagram_url",
+        "label": "Instagram"
+      },
+      {
+        "type": "url",
+        "id": "social_tiktok_url",
+        "label": "TikTok"
+      },
+      {
+        "type": "url",
+        "id": "social_facebook_url",
+        "label": "Facebook"
+      },
+      {
+        "type": "url",
+        "id": "social_youtube_url",
+        "label": "YouTube"
+      }
+    ]
+  },
+  {
+    "name": "Partage social",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "share_facebook",
+        "label": "Partage Facebook",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "share_twitter",
+        "label": "Partage Twitter",
+        "default": true
+      },
+      {
+        "type": "image_picker",
+        "id": "social_sharing_image",
+        "label": "Image de partage réseaux sociaux"
+      }
+    ]
+  },
+  {
+    "name": "Panier",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "cart_ajax_enabled",
+        "label": "Panier AJAX (sans rechargement de page)",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "show_cart_count",
+        "label": "Afficher le nombre d'articles dans le header",
+        "default": true
+      }
+    ]
+  },
+  {
+    "name": "Animations",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "animations_enabled",
+        "label": "Activer les animations au scroll",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "grid_background",
+        "label": "Afficher la grille de fond",
+        "default": true
+      }
+    ]
+  }
+]

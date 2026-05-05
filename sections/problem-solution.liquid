@@ -1,0 +1,129 @@
+<section class="section problem-solution" id="problem-solution">
+  <div class="container">
+
+    <div class="text-center fade-in">
+      <p class="section-label">{{ section.settings.label }}</p>
+      <h2 class="section-title">{{ section.settings.title }}</h2>
+      <p class="section-subtitle">{{ section.settings.subtitle }}</p>
+    </div>
+
+    <div class="problem-grid fade-in">
+
+      {%- comment -%} Problems {%- endcomment -%}
+      <div class="problem-card problem-card-problem glass-card">
+        <div class="problem-card-header">
+          <div class="problem-card-icon">😤</div>
+          <h3 class="problem-card-title">{{ section.settings.problem_title }}</h3>
+        </div>
+        <ul role="list">
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'problem' -%}
+              <li class="problem-item" {{ block.shopify_attributes }}>
+                <span class="problem-item-icon" aria-hidden="true">✗</span>
+                <span class="problem-item-text">{{ block.settings.text }}</span>
+              </li>
+            {%- endif -%}
+          {%- endfor -%}
+        </ul>
+      </div>
+
+      {%- comment -%} Solutions {%- endcomment -%}
+      <div class="problem-card problem-card-solution glass-card">
+        <div class="problem-card-header">
+          <div class="problem-card-icon">⚡</div>
+          <h3 class="problem-card-title">{{ section.settings.solution_title }}</h3>
+        </div>
+        <ul role="list">
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'solution' -%}
+              <li class="problem-item" {{ block.shopify_attributes }}>
+                <span class="problem-item-icon text-green" aria-hidden="true">✓</span>
+                <span class="problem-item-text">{{ block.settings.text }}</span>
+              </li>
+            {%- endif -%}
+          {%- endfor -%}
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Problème / Solution",
+  "settings": [
+    {
+      "type": "text",
+      "id": "label",
+      "label": "Label de section",
+      "default": "Le Problème"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Titre",
+      "default": "Les moustiques gâchent vos meilleurs moments"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Sous-titre",
+      "default": "Soirées en terrasse, nuits en camping, voyages à l'étranger — les moustiques s'invitent partout. Skito a été conçu pour qu'ils n'aient plus leur place."
+    },
+    {
+      "type": "text",
+      "id": "problem_title",
+      "label": "Titre colonne Problème",
+      "default": "Sans Skito"
+    },
+    {
+      "type": "text",
+      "id": "solution_title",
+      "label": "Titre colonne Solution",
+      "default": "Avec Skito"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "problem",
+      "name": "Élément problème",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Texte",
+          "default": "Nuits interrompues par les bourdonnements"
+        }
+      ]
+    },
+    {
+      "type": "solution",
+      "name": "Élément solution",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Texte",
+          "default": "Protection active jusqu'à 12h non-stop"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Problème / Solution",
+      "blocks": [
+        { "type": "problem", "settings": { "text": "Nuits interrompues par les bourdonnements incessants" } },
+        { "type": "problem", "settings": { "text": "Sprays chimiques collants et à l'odeur désagréable" } },
+        { "type": "problem", "settings": { "text": "Piqûres douloureuses qui ruinent les soirées dehors" } },
+        { "type": "problem", "settings": { "text": "Recharges coûteuses, produits qui s'oublient à la maison" } },
+        { "type": "solution", "settings": { "text": "Protection active jusqu'à 12h non-stop, sans interruption" } },
+        { "type": "solution", "settings": { "text": "Formule propre, sans spray, sans contact sur la peau" } },
+        { "type": "solution", "settings": { "text": "Compact et nomade — il part partout avec vous" } },
+        { "type": "solution", "settings": { "text": "Rechargeable via USB — un seul achat, une protection durable" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

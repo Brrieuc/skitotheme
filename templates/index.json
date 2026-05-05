@@ -1,0 +1,212 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero",
+      "settings": {
+        "badge_text": "⚡ Nouvelle génération",
+        "headline_accent": "La protection anti-moustiques",
+        "headline_rest": "nouvelle génération",
+        "subtitle": "Profitez de vos soirées, terrasses et voyages sans être envahi. La technologie au service de votre confort extérieur.",
+        "cta_primary_text": "Découvrir Skito",
+        "cta_secondary_text": "Voir le produit",
+        "stat_1_number": "98%",
+        "stat_1_label": "Satisfaction client",
+        "stat_2_number": "5000+",
+        "stat_2_label": "Clients protégés",
+        "stat_3_number": "12h",
+        "stat_3_label": "De protection continue",
+        "card_product_name": "Skito Pro Shield",
+        "card_product_tagline": "Protection intelligente 360°",
+        "card_product_price": "€29.90",
+        "product_tagline": "Protection intelligente 360°"
+      }
+    },
+    "problem-solution": {
+      "type": "problem-solution",
+      "blocks": {
+        "prob-1": { "type": "problem", "settings": { "text": "Nuits interrompues par les bourdonnements incessants" } },
+        "prob-2": { "type": "problem", "settings": { "text": "Sprays chimiques collants et à l'odeur désagréable" } },
+        "prob-3": { "type": "problem", "settings": { "text": "Piqûres douloureuses qui ruinent les soirées dehors" } },
+        "prob-4": { "type": "problem", "settings": { "text": "Recharges coûteuses et oubliées à la maison" } },
+        "sol-1": { "type": "solution", "settings": { "text": "Protection active jusqu'à 12h non-stop, sans interruption" } },
+        "sol-2": { "type": "solution", "settings": { "text": "Formule propre, sans spray, sans contact sur la peau" } },
+        "sol-3": { "type": "solution", "settings": { "text": "Compact et nomade — il part partout avec vous" } },
+        "sol-4": { "type": "solution", "settings": { "text": "Rechargeable USB — un seul achat, une protection durable" } }
+      },
+      "block_order": ["prob-1", "prob-2", "prob-3", "prob-4", "sol-1", "sol-2", "sol-3", "sol-4"],
+      "settings": {
+        "label": "Le Problème",
+        "title": "Les moustiques gâchent vos meilleurs moments",
+        "subtitle": "Soirées en terrasse, nuits en camping, voyages à l'étranger — les moustiques s'invitent partout. Skito a été conçu pour qu'ils n'aient plus leur place.",
+        "problem_title": "Sans Skito",
+        "solution_title": "Avec Skito"
+      }
+    },
+    "benefits": {
+      "type": "benefits",
+      "blocks": {
+        "b1": { "type": "benefit", "settings": { "icon": "🛡️", "title": "Protection extérieure", "description": "Efficace en plein air, même par vent léger. Idéal pour terrasses, jardins et soirées d'été." } },
+        "b2": { "type": "benefit", "settings": { "icon": "🎒", "title": "Format nomade", "description": "Ultra-compact, il tient dans une poche. Partez en voyage, camping ou festival sans contrainte." } },
+        "b3": { "type": "benefit", "settings": { "icon": "✨", "title": "Sans spray collant", "description": "Pas de produit sur la peau. Une technologie propre, discrète et respectueuse de votre confort." } },
+        "b4": { "type": "benefit", "settings": { "icon": "⚡", "title": "Rechargeable USB", "description": "Batterie intégrée rechargeable. Un investissement unique pour une protection renouvelable." } }
+      },
+      "block_order": ["b1", "b2", "b3", "b4"],
+      "settings": {
+        "label": "Pourquoi Skito",
+        "title": "Conçu pour votre mode de vie extérieur",
+        "subtitle": "Skito s'adapte à chaque situation — de la terrasse au trek, de la nuit en camping au voyage lointain."
+      }
+    },
+    "featured-product": {
+      "type": "featured-product",
+      "blocks": {
+        "fp-b1": { "type": "bullet", "settings": { "text": "Protection efficace jusqu'à 12h d'affilée" } },
+        "fp-b2": { "type": "bullet", "settings": { "text": "Sans spray, sans contact direct sur la peau" } },
+        "fp-b3": { "type": "bullet", "settings": { "text": "Format compact — voyage, camping, terrasse" } },
+        "fp-b4": { "type": "bullet", "settings": { "text": "Rechargeable via USB-C, batterie longue durée" } },
+        "fp-b5": { "type": "bullet", "settings": { "text": "Testé et approuvé par 5000+ utilisateurs" } }
+      },
+      "block_order": ["fp-b1", "fp-b2", "fp-b3", "fp-b4", "fp-b5"],
+      "settings": {
+        "label": "Produit phare",
+        "title": "Le Skito Pro Shield",
+        "subtitle": "La protection anti-moustiques la plus avancée du marché.",
+        "review_count": "247"
+      }
+    },
+    "how-it-works": {
+      "type": "how-it-works",
+      "blocks": {
+        "s1": { "type": "step", "settings": { "icon": "⚡", "title": "Chargez", "description": "Branchez Skito sur n'importe quel port USB. En 2h, il est prêt pour une journée complète de protection." } },
+        "s2": { "type": "step", "settings": { "icon": "▶️", "title": "Activez", "description": "Un seul bouton. Placez Skito à proximité — sur la table, le sol, ou fixez-le à votre sac. C'est tout." } },
+        "s3": { "type": "step", "settings": { "icon": "🧘", "title": "Profitez", "description": "Détendez-vous. Skito crée une zone de protection invisible autour de vous. Zéro moustique, 100% sérénité." } }
+      },
+      "block_order": ["s1", "s2", "s3"],
+      "settings": {
+        "label": "Simple & efficace",
+        "title": "En 3 étapes, vous êtes protégé",
+        "subtitle": "Pas de mode d'emploi compliqué. Skito fonctionne immédiatement, partout où vous allez."
+      }
+    },
+    "reviews": {
+      "type": "reviews",
+      "blocks": {
+        "r1": { "type": "review", "settings": { "name": "Sophie M.", "date": "Avril 2025", "rating": 5, "title": "Enfin une vraie protection !", "text": "On l'a testé lors d'un séjour en Corse. Aucune piqûre de toute la semaine, même le soir en terrasse. Je ne pars plus sans mon Skito." } },
+        "r2": { "type": "review", "settings": { "name": "Thomas R.", "date": "Mars 2025", "rating": 5, "title": "Discret et ultra efficace", "text": "Je suis très sceptique avec ce genre de produits, mais Skito m'a convaincu. Compact, rechargeable et vraiment efficace. Parfait pour les soirées jardin." } },
+        "r3": { "type": "review", "settings": { "name": "Camille D.", "date": "Mai 2025", "rating": 5, "title": "Le meilleur achat de l'été", "text": "Idéal pour voyager ! Je l'emmène partout depuis mon retour du Portugal. Très bonne autonomie et facile à utiliser. Design super stylé aussi." } }
+      },
+      "block_order": ["r1", "r2", "r3"],
+      "settings": {
+        "label": "Ils nous font confiance",
+        "title": "Ce que nos clients disent",
+        "subtitle": "Plus de 5000 familles, voyageurs et amateurs de plein air protégés par Skito.",
+        "score": "4.9",
+        "total_reviews": "247",
+        "pct_5": 87,
+        "pct_4": 9,
+        "pct_3": 3,
+        "pct_2": 1,
+        "pct_1": 0
+      }
+    },
+    "bundles": {
+      "type": "bundles",
+      "blocks": {
+        "pk1": {
+          "type": "bundle",
+          "settings": {
+            "name": "Pack Solo",
+            "description": "L'essentiel pour une protection nomade",
+            "price": "€29.90",
+            "compare_price": "€39.90",
+            "save_text": "Économisez 10€",
+            "featured": false,
+            "feature_1": "1 × Skito Pro Shield",
+            "feature_2": "Câble USB-C inclus",
+            "feature_3": "Livraison offerte",
+            "cta_text": "Choisir le Pack Solo"
+          }
+        },
+        "pk2": {
+          "type": "bundle",
+          "settings": {
+            "name": "Pack Duo",
+            "description": "Protégez vous et votre partenaire",
+            "price": "€49.90",
+            "compare_price": "€69.80",
+            "save_text": "Économisez 20€",
+            "featured": true,
+            "featured_label": "Meilleure offre",
+            "feature_1": "2 × Skito Pro Shield",
+            "feature_2": "2 × Câbles USB-C",
+            "feature_3": "Pochette de transport offerte",
+            "feature_4": "Livraison offerte",
+            "cta_text": "Choisir le Pack Duo"
+          }
+        },
+        "pk3": {
+          "type": "bundle",
+          "settings": {
+            "name": "Pack Famille",
+            "description": "Toute la famille protégée cet été",
+            "price": "€79.90",
+            "compare_price": "€119.70",
+            "save_text": "Économisez 40€",
+            "featured": false,
+            "feature_1": "4 × Skito Pro Shield",
+            "feature_2": "4 × Câbles USB-C",
+            "feature_3": "Pochette de transport premium",
+            "feature_4": "Livraison express offerte",
+            "feature_5": "Support prioritaire",
+            "cta_text": "Choisir le Pack Famille"
+          }
+        }
+      },
+      "block_order": ["pk1", "pk2", "pk3"],
+      "settings": {
+        "label": "Nos offres",
+        "title": "Choisissez votre pack de protection",
+        "subtitle": "Seul, en famille ou pour toute la maison — il y a un Skito pour chaque besoin."
+      }
+    },
+    "faq": {
+      "type": "faq-accordion",
+      "blocks": {
+        "faq1": { "type": "item", "settings": { "question": "Comment fonctionne Skito exactement ?", "answer": "<p>Skito combine plusieurs technologies pour repousser les moustiques. L'appareil crée une zone de protection dans un rayon de 3 à 5 mètres autour de lui.</p>" } },
+        "faq2": { "type": "item", "settings": { "question": "Quelle est l'autonomie de la batterie ?", "answer": "<p>La batterie intégrée offre jusqu'à 12 heures d'utilisation continue sur une seule charge. La recharge complète prend environ 2 heures via le câble USB-C inclus.</p>" } },
+        "faq3": { "type": "item", "settings": { "question": "Est-ce que Skito est sûr pour les enfants et les animaux ?", "answer": "<p>Oui, Skito est conçu pour être sûr pour toute la famille. Il n'émet aucun produit chimique nocif et n'est pas toxique pour les animaux domestiques.</p>" } },
+        "faq4": { "type": "item", "settings": { "question": "Skito fonctionne-t-il en extérieur ?", "answer": "<p>Absolument. Skito est conçu spécifiquement pour l'utilisation en extérieur : terrasse, jardin, camping, festivals, voyages. Il est résistant aux éclaboussures.</p>" } },
+        "faq5": { "type": "item", "settings": { "question": "Quelle est votre politique de retour ?", "answer": "<p>Nous offrons une garantie satisfait ou remboursé de 30 jours. Si Skito ne vous convient pas, contactez notre service client et nous vous remboursons intégralement.</p>" } }
+      },
+      "block_order": ["faq1", "faq2", "faq3", "faq4", "faq5"],
+      "settings": {
+        "label": "Questions fréquentes",
+        "title": "Vous avez des questions ?",
+        "subtitle": "Trouvez les réponses aux questions les plus courantes sur Skito.",
+        "contact_text": "Vous n'avez pas trouvé votre réponse ?",
+        "contact_cta_text": "Contactez notre équipe"
+      }
+    },
+    "final-cta": {
+      "type": "final-cta",
+      "settings": {
+        "badge": "Prêt à profiter de l'été ?",
+        "title_accent": "Cet été, prenez le contrôle.",
+        "title": "Protégez ce qui compte vraiment.",
+        "subtitle": "Rejoignez les milliers de personnes qui profitent de leurs soirées, terrasses et voyages sans moustiques.",
+        "primary_cta_text": "Commander maintenant"
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "problem-solution",
+    "benefits",
+    "featured-product",
+    "how-it-works",
+    "reviews",
+    "bundles",
+    "faq",
+    "final-cta"
+  ]
+}

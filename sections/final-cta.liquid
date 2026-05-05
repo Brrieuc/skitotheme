@@ -1,0 +1,106 @@
+<section class="section final-cta" id="final-cta" aria-labelledby="final-cta-heading">
+  <div class="final-cta-bg" aria-hidden="true"></div>
+  <div class="container">
+    <div class="final-cta-inner fade-in">
+
+      <span class="badge badge-green" style="margin-bottom:1.5rem;display:inline-flex;">{{ section.settings.badge }}</span>
+
+      <h2 class="final-cta-title" id="final-cta-heading">
+        {%- if section.settings.title_accent != blank -%}
+          <span class="gradient-text">{{ section.settings.title_accent }}</span><br>
+        {%- endif -%}
+        {{ section.settings.title }}
+      </h2>
+
+      <p class="final-cta-subtitle">{{ section.settings.subtitle }}</p>
+
+      <div class="final-cta-actions">
+        <a href="{{ section.settings.primary_cta_url }}" class="btn btn-primary btn-lg">
+          {{ section.settings.primary_cta_text }}
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+          </svg>
+        </a>
+        {%- if section.settings.secondary_cta_text != blank -%}
+          <a href="{{ section.settings.secondary_cta_url }}" class="btn btn-secondary">
+            {{ section.settings.secondary_cta_text }}
+          </a>
+        {%- endif -%}
+      </div>
+
+      <div class="final-cta-guarantees">
+        <span class="final-cta-guarantee">
+          <span class="final-cta-guarantee-icon" aria-hidden="true">✓</span>
+          Satisfaction garantie 30 jours
+        </span>
+        <span class="final-cta-guarantee">
+          <span class="final-cta-guarantee-icon" aria-hidden="true">✓</span>
+          Livraison offerte dès 49€
+        </span>
+        <span class="final-cta-guarantee">
+          <span class="final-cta-guarantee-icon" aria-hidden="true">✓</span>
+          Paiement 100% sécurisé
+        </span>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "CTA Final",
+  "settings": [
+    {
+      "type": "text",
+      "id": "badge",
+      "label": "Badge",
+      "default": "Prêt à profiter de l'été ?"
+    },
+    {
+      "type": "text",
+      "id": "title_accent",
+      "label": "Titre (partie accentuée gradient)",
+      "default": "Cet été, prenez le contrôle."
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Titre (suite)",
+      "default": "Protégez ce qui compte vraiment."
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Sous-titre",
+      "default": "Rejoignez les milliers de personnes qui profitent de leurs soirées, terrasses et voyages sans moustiques. Skito, c'est simple, efficace, et ça change tout."
+    },
+    {
+      "type": "text",
+      "id": "primary_cta_text",
+      "label": "Bouton principal",
+      "default": "Commander maintenant"
+    },
+    {
+      "type": "url",
+      "id": "primary_cta_url",
+      "label": "Lien bouton principal"
+    },
+    {
+      "type": "text",
+      "id": "secondary_cta_text",
+      "label": "Bouton secondaire (optionnel)"
+    },
+    {
+      "type": "url",
+      "id": "secondary_cta_url",
+      "label": "Lien bouton secondaire"
+    }
+  ],
+  "presets": [
+    {
+      "name": "CTA Final"
+    }
+  ]
+}
+{% endschema %}

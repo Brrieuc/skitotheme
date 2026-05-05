@@ -1,0 +1,52 @@
+{%- comment -%}
+  Renders a product card.
+  Usage: {% render 'product-card', product: product %}
+{%- endcomment -%}
+
+<article class="product-card fade-in" aria-label="{{ product.title }}">
+  <a href="{{ product.url }}" class="product-card-image" tabindex="-1" aria-hidden="true">
+    {%- if product.featured_image != blank -%}
+      <img src="{{ product.featured_image | image_url: width: 600 }}"
+           alt="{{ product.featured_image.alt | escape | default: product.title }}"
+           width="600"
+           loading="lazy">
+    {%- else -%}
+      <div style="display:flex;align-items:center;justify-content:center;height:100%;font-size:4rem;" aria-hidden="true">⚡</div>
+    {%- endif -%}
+
+    {%- if product.compare_at_price > product.price -%}
+      <div class="product-card-badge">
+        <span class="badge badge-green">
+          -{{ product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price | round }}%
+        </span>
+      </div>
+    {%- endif -%}
+
+    {%- unless product.available -%}
+      <div class="product-card-badge">
+        <span class="badge badge-white">Épuisé</span>
+      </div>
+    {%- endunless -%}
+  </a>
+
+  <div class="product-card-body">
+    <h3 class="product-card-name">
+      <a href="{{ product.url }}">{{ product.title }}</a>
+    </h3>
+    {%- if product.description != blank -%}
+      <p class="product-card-desc">{{ product.description | strip_html }}</p>
+    {%- endif -%}
+
+    <div class="product-card-footer">
+      <div>
+        <span class="product-card-price">{{ product.price | money }}</span>
+        {%- if product.compare_at_price > product.price -%}
+          <span class="product-card-price-compare">{{ product.compare_at_price | money }}</span>
+        {%- endif -%}
+      </div>
+      <a href="{{ product.url }}" class="btn btn-primary btn-sm" aria-label="Voir {{ product.title }}">
+        Voir →
+      </a>
+    </div>
+  </div>
+</article>

@@ -1,0 +1,39 @@
+{
+  "sections": {
+    "faq-hero": {
+      "type": "final-cta",
+      "settings": {
+        "badge": "Centre d'aide",
+        "title_accent": "Questions fréquentes",
+        "title": "Tout ce que vous voulez savoir sur Skito",
+        "subtitle": "Retrouvez les réponses aux questions les plus fréquentes. Notre équipe reste disponible si vous avez besoin d'aide.",
+        "primary_cta_text": "Nous contacter",
+        "secondary_cta_text": ""
+      }
+    },
+    "faq-main": {
+      "type": "faq-accordion",
+      "blocks": {
+        "f1":  { "type": "item", "settings": { "question": "Comment fonctionne Skito exactement ?", "answer": "<p>Skito combine plusieurs technologies pour repousser les moustiques : émission d'ultrasons, diffusion légère de vapeur répulsive et chaleur ciblée. L'ensemble crée une zone de protection dans un rayon de 3 à 5 mètres autour de l'appareil.</p>" } },
+        "f2":  { "type": "item", "settings": { "question": "Quelle est l'autonomie de la batterie ?", "answer": "<p>La batterie intégrée offre jusqu'à 12 heures d'utilisation continue sur une seule charge. La recharge complète prend environ 2 heures via le câble USB-C inclus.</p>" } },
+        "f3":  { "type": "item", "settings": { "question": "Est-ce que Skito est sûr pour les enfants et les animaux ?", "answer": "<p>Oui, Skito est conçu pour être sûr pour toute la famille. Il n'émet aucun produit chimique nocif et n'est pas toxique pour les animaux domestiques. Les fréquences utilisées sont inaudibles pour les humains.</p>" } },
+        "f4":  { "type": "item", "settings": { "question": "Skito fonctionne-t-il en extérieur ?", "answer": "<p>Absolument. Skito est conçu spécifiquement pour l'utilisation en extérieur : terrasse, jardin, camping, festivals, voyages. Il est résistant aux éclaboussures et efficace même par vent léger.</p>" } },
+        "f5":  { "type": "item", "settings": { "question": "Quelle est votre politique de retour ?", "answer": "<p>Nous offrons une garantie satisfait ou remboursé de 30 jours. Si Skito ne vous convient pas, contactez notre service client et nous vous remboursons intégralement, sans questions posées.</p>" } },
+        "f6":  { "type": "item", "settings": { "question": "Combien de temps pour recevoir ma commande ?", "answer": "<p>Toutes les commandes sont expédiées sous 24h ouvrées. La livraison standard prend 3 à 5 jours ouvrés en France métropolitaine. La livraison express (24-48h) est disponible en option.</p>" } },
+        "f7":  { "type": "item", "settings": { "question": "Skito est-il rechargeable ?", "answer": "<p>Oui ! Skito est équipé d'une batterie lithium intégrée rechargeable via port USB-C. Le câble est inclus dans la boîte. Chaque recharge dure environ 2h pour une autonomie de 12h.</p>" } },
+        "f8":  { "type": "item", "settings": { "question": "Quelle est la garantie produit ?", "answer": "<p>Tous les appareils Skito sont couverts par une garantie fabricant de 2 ans contre les défauts de fabrication. En cas de problème, notre service client est disponible 7j/7 par email.</p>" } },
+        "f9":  { "type": "item", "settings": { "question": "Puis-je l'utiliser en voyage à l'étranger ?", "answer": "<p>Oui, Skito fonctionne sur batterie intégrée — pas besoin de prise secteur spécifique. Il est compact et léger (moins de 150g), parfait pour les voyages. Compatible avec la plupart des chargeurs USB universels.</p>" } },
+        "f10": { "type": "item", "settings": { "question": "Quels moustiques est-ce que Skito repousse ?", "answer": "<p>Skito est efficace contre les principales espèces de moustiques présentes en Europe et dans les zones tropicales, incluant les moustiques tigres (Aedes albopictus) et les moustiques communs (Culex pipiens).</p>" } }
+      },
+      "block_order": ["f1","f2","f3","f4","f5","f6","f7","f8","f9","f10"],
+      "settings": {
+        "label": "FAQ complète",
+        "title": "Toutes vos questions",
+        "subtitle": "Tout ce que vous devez savoir avant d'acheter Skito.",
+        "contact_text": "Vous n'avez pas trouvé votre réponse ?",
+        "contact_cta_text": "Contactez notre équipe"
+      }
+    }
+  },
+  "order": ["faq-hero", "faq-main"]
+}

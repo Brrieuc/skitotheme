@@ -1,0 +1,177 @@
+<div class="cart-page section">
+  <div class="container">
+
+    <div class="fade-in" style="margin-bottom:2.5rem;">
+      <p class="section-label">Votre sélection</p>
+      <h1 style="font-size:clamp(1.8rem,4vw,2.5rem);">Mon panier</h1>
+    </div>
+
+    {%- if cart.item_count > 0 -%}
+
+      <form action="{{ routes.cart_url }}" method="post" class="cart-form" id="cart-form">
+        <div class="cart-inner">
+
+          {%- comment -%} Cart items {%- endcomment -%}
+          <div class="cart-items fade-in">
+
+            {%- for item in cart.items -%}
+              <div class="cart-item glass-card">
+
+                <div class="cart-item-image">
+                  {%- if item.image != blank -%}
+                    <img src="{{ item.image | image_url: width: 200 }}"
+                         alt="{{ item.image.alt | escape | default: item.title }}"
+                         width="100" height="100"
+                         loading="lazy">
+                  {%- endif -%}
+                </div>
+
+                <div class="cart-item-details">
+                  <a href="{{ item.url }}" class="cart-item-name">{{ item.product.title }}</a>
+                  {%- unless item.product.has_only_default_variant -%}
+                    <div class="cart-item-variant">{{ item.variant.title }}</div>
+                  {%- endunless -%}
+                  <div class="cart-item-actions">
+                    <div class="quantity-selector" style="transform:scale(0.9);transform-origin:left;">
+                      <button type="button" class="quantity-btn" data-action="minus" aria-label="Diminuer">−</button>
+                      <input type="number"
+                             name="updates[]"
+                             value="{{ item.quantity }}"
+                             min="0"
+                             max="99"
+                             class="quantity-input"
+                             data-line="{{ forloop.index }}"
+                             aria-label="Quantité pour {{ item.title }}">
+                      <button type="button" class="quantity-btn" data-action="plus" aria-label="Augmenter">+</button>
+                    </div>
+                    <button type="button"
+                            class="cart-item-remove"
+                            data-line="{{ forloop.index }}"
+                            aria-label="Supprimer {{ item.title }}">
+                      Supprimer
+                    </button>
+                  </div>
+                </div>
+
+                <div class="cart-item-price">
+                  {{ item.line_price | money }}
+                  {%- if item.original_line_price != item.line_price -%}
+                    <div style="font-size:0.8rem;color:var(--color-text-dim);text-decoration:line-through;margin-top:0.25rem;">
+                      {{ item.original_line_price | money }}
+                    </div>
+                  {%- endif -%}
+                </div>
+
+              </div>
+            {%- endfor -%}
+
+            {%- comment -%} Continue shopping {%- endcomment -%}
+            <a href="{{ routes.all_products_collection_url }}" class="btn btn-secondary" style="align-self:flex-start;">
+              ← Continuer mes achats
+            </a>
+
+          </div>
+
+          {%- comment -%} Order summary {%- endcomment -%}
+          <div class="cart-summary glass-card fade-in fade-in-delay-1">
+            <h2 class="cart-summary-title">Récapitulatif</h2>
+
+            <div class="cart-summary-row">
+              <span>Sous-total ({{ cart.item_count }} article{{ cart.item_count | pluralize: '', 's' }})</span>
+              <span class="amount">{{ cart.original_total_price | money }}</span>
+            </div>
+
+            {%- if cart.cart_level_discount_applications.size > 0 -%}
+              {%- for discount in cart.cart_level_discount_applications -%}
+                <div class="cart-summary-row" style="color:var(--color-green);">
+                  <span>{{ discount.title }}</span>
+                  <span class="amount" style="color:var(--color-green);">-{{ discount.total_allocated_amount | money }}</span>
+                </div>
+              {%- endfor -%}
+            {%- endif -%}
+
+            <div class="cart-summary-row">
+              <span>Livraison</span>
+              <span class="amount">
+                {%- if cart.total_price >= 4900 -%}
+                  <span class="text-green">Gratuite</span>
+                {%- else -%}
+                  Calculée à l'étape suivante
+                {%- endif -%}
+              </span>
+            </div>
+
+            {%- if cart.total_price < 4900 -%}
+              {%- assign remaining = 4900 | minus: cart.total_price -%}
+              <div style="background:rgba(140,255,102,0.06);border:1px solid rgba(140,255,102,0.15);border-radius:var(--radius-sm);padding:0.75rem 1rem;margin:0.5rem 0;font-size:0.825rem;color:var(--color-text-muted);">
+                Plus que <strong style="color:var(--color-green);">{{ remaining | money }}</strong> pour bénéficier de la livraison offerte !
+              </div>
+            {%- endif -%}
+
+            <div class="cart-summary-divider"></div>
+
+            <div class="cart-summary-row total">
+              <span>Total</span>
+              <span class="amount">{{ cart.total_price | money }}</span>
+            </div>
+
+            <div class="cart-checkout-area">
+              <button type="submit"
+                      name="checkout"
+                      class="btn btn-primary btn-lg btn-full">
+                Passer la commande →
+              </button>
+              {%- if additional_checkout_buttons -%}
+                <div style="text-align:center;position:relative;margin:0.5rem 0;">
+                  <div style="height:1px;background:var(--color-border);"></div>
+                  <span style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:var(--color-bg-card);padding:0 0.75rem;font-size:0.75rem;color:var(--color-text-dim);">ou</span>
+                </div>
+                {{ content_for_additional_checkout_buttons }}
+              {%- endif -%}
+            </div>
+
+            <div class="cart-trust">
+              <div class="cart-trust-item">
+                <span class="cart-trust-item-icon" aria-hidden="true">🔒</span>
+                Paiement 100% sécurisé SSL
+              </div>
+              <div class="cart-trust-item">
+                <span class="cart-trust-item-icon" aria-hidden="true">↩️</span>
+                Retours gratuits sous 30 jours
+              </div>
+              <div class="cart-trust-item">
+                <span class="cart-trust-item-icon" aria-hidden="true">🚚</span>
+                Livraison offerte dès 49€
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </form>
+
+    {%- else -%}
+      <div class="cart-empty fade-in">
+        <div class="cart-empty-icon" aria-hidden="true">🛒</div>
+        <h2 class="cart-empty-title">Votre panier est vide</h2>
+        <p class="cart-empty-text">Découvrez nos produits anti-moustiques nouvelle génération.</p>
+        <a href="{{ routes.all_products_collection_url }}" class="btn btn-primary btn-lg">
+          Découvrir Skito →
+        </a>
+      </div>
+    {%- endif -%}
+
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Page panier",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Page panier"
+    }
+  ]
+}
+{% endschema %}

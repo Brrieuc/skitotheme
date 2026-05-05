@@ -1,0 +1,240 @@
+<section class="hero" id="hero" aria-labelledby="hero-heading">
+
+  {%- comment -%} Animated background {%- endcomment -%}
+  <div class="hero-bg" aria-hidden="true">
+    <div class="hero-gradient"></div>
+    <div class="hero-orb hero-orb-1"></div>
+    <div class="hero-orb hero-orb-2"></div>
+    <div class="hero-orb hero-orb-3"></div>
+  </div>
+
+  <div class="container">
+    <div class="hero-inner">
+
+      {%- comment -%} Content {%- endcomment -%}
+      <div class="hero-content">
+        <div class="hero-badge fade-in">
+          <span class="badge badge-green">{{ section.settings.badge_text }}</span>
+        </div>
+
+        <h1 class="hero-title fade-in fade-in-delay-1" id="hero-heading">
+          {%- if section.settings.headline_accent != blank -%}
+            <span class="gradient-text">{{ section.settings.headline_accent }}</span>
+            {%- if section.settings.headline_rest != blank -%}<br>{{ section.settings.headline_rest }}{%- endif -%}
+          {%- else -%}
+            {{ section.settings.headline }}
+          {%- endif -%}
+        </h1>
+
+        <p class="hero-subtitle fade-in fade-in-delay-2">{{ section.settings.subtitle }}</p>
+
+        <div class="hero-cta fade-in fade-in-delay-3">
+          <a href="{{ section.settings.cta_primary_url }}" class="btn btn-primary btn-lg">
+            {{ section.settings.cta_primary_text }}
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+            </svg>
+          </a>
+          <a href="{{ section.settings.cta_secondary_url }}" class="btn btn-secondary">
+            {{ section.settings.cta_secondary_text }}
+          </a>
+        </div>
+
+        <div class="hero-stats fade-in fade-in-delay-4">
+          <div class="hero-stat">
+            <span class="hero-stat-number">{{ section.settings.stat_1_number }}</span>
+            <span class="hero-stat-label">{{ section.settings.stat_1_label }}</span>
+          </div>
+          <div class="hero-stat-divider" aria-hidden="true"></div>
+          <div class="hero-stat">
+            <span class="hero-stat-number">{{ section.settings.stat_2_number }}</span>
+            <span class="hero-stat-label">{{ section.settings.stat_2_label }}</span>
+          </div>
+          <div class="hero-stat-divider" aria-hidden="true"></div>
+          <div class="hero-stat">
+            <span class="hero-stat-number">{{ section.settings.stat_3_number }}</span>
+            <span class="hero-stat-label">{{ section.settings.stat_3_label }}</span>
+          </div>
+        </div>
+      </div>
+
+      {%- comment -%} Floating product card {%- endcomment -%}
+      <div class="hero-visual fade-in fade-in-delay-2" aria-hidden="true">
+        <div class="hero-product-card">
+          <div class="hero-scan-line"></div>
+
+          <div class="hero-card-badge">
+            <span class="badge badge-green">Nouveau</span>
+          </div>
+
+          {%- if section.settings.product != blank -%}
+            {%- assign hero_product = section.settings.product -%}
+            {%- if hero_product.featured_image != blank -%}
+              <img src="{{ hero_product.featured_image | image_url: width: 600 }}"
+                   alt="{{ hero_product.featured_image.alt | escape | default: hero_product.title }}"
+                   class="hero-product-image"
+                   width="600"
+                   loading="eager">
+            {%- else -%}
+              <div class="hero-product-image-placeholder">
+                <span style="font-size:4rem;">🦟</span>
+              </div>
+            {%- endif -%}
+            <div class="hero-product-info">
+              <div class="hero-product-name">{{ hero_product.title }}</div>
+              <div class="hero-product-tagline">{{ section.settings.product_tagline | default: hero_product.metafields.custom.tagline }}</div>
+              <div class="hero-product-footer">
+                <span class="hero-product-price">{{ hero_product.price | money }}</span>
+                <a href="{{ hero_product.url }}" class="btn btn-primary btn-sm">Acheter</a>
+              </div>
+            </div>
+          {%- else -%}
+            <div class="hero-product-image-placeholder">
+              <span style="font-size:4rem;">⚡</span>
+            </div>
+            <div class="hero-product-info">
+              <div class="hero-product-name">{{ section.settings.card_product_name }}</div>
+              <div class="hero-product-tagline">{{ section.settings.card_product_tagline }}</div>
+              <div class="hero-product-footer">
+                <span class="hero-product-price">{{ section.settings.card_product_price }}</span>
+                <a href="{{ section.settings.cta_primary_url }}" class="btn btn-primary btn-sm">Acheter</a>
+              </div>
+            </div>
+          {%- endif -%}
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</section>
+
+{% schema %}
+{
+  "name": "Hero",
+  "settings": [
+    {
+      "type": "text",
+      "id": "badge_text",
+      "label": "Texte du badge",
+      "default": "⚡ Nouvelle génération"
+    },
+    {
+      "type": "text",
+      "id": "headline_accent",
+      "label": "Titre (partie accentuée gradient)",
+      "default": "La protection anti-moustiques"
+    },
+    {
+      "type": "text",
+      "id": "headline_rest",
+      "label": "Titre (suite normale)",
+      "default": "nouvelle génération"
+    },
+    {
+      "type": "text",
+      "id": "headline",
+      "label": "Titre complet (si pas d'accent)",
+      "default": "La protection anti-moustiques nouvelle génération"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Sous-titre",
+      "default": "Profitez de vos soirées, terrasses et voyages sans être envahi. La technologie au service de votre confort extérieur."
+    },
+    {
+      "type": "text",
+      "id": "cta_primary_text",
+      "label": "Bouton principal",
+      "default": "Découvrir Skito"
+    },
+    {
+      "type": "url",
+      "id": "cta_primary_url",
+      "label": "Lien bouton principal"
+    },
+    {
+      "type": "text",
+      "id": "cta_secondary_text",
+      "label": "Bouton secondaire",
+      "default": "Voir le produit"
+    },
+    {
+      "type": "url",
+      "id": "cta_secondary_url",
+      "label": "Lien bouton secondaire"
+    },
+    {
+      "type": "text",
+      "id": "stat_1_number",
+      "label": "Stat 1 — chiffre",
+      "default": "98%"
+    },
+    {
+      "type": "text",
+      "id": "stat_1_label",
+      "label": "Stat 1 — label",
+      "default": "Satisfaction client"
+    },
+    {
+      "type": "text",
+      "id": "stat_2_number",
+      "label": "Stat 2 — chiffre",
+      "default": "5000+"
+    },
+    {
+      "type": "text",
+      "id": "stat_2_label",
+      "label": "Stat 2 — label",
+      "default": "Clients protégés"
+    },
+    {
+      "type": "text",
+      "id": "stat_3_number",
+      "label": "Stat 3 — chiffre",
+      "default": "12h"
+    },
+    {
+      "type": "text",
+      "id": "stat_3_label",
+      "label": "Stat 3 — label",
+      "default": "De protection continue"
+    },
+    {
+      "type": "product",
+      "id": "product",
+      "label": "Produit mis en avant"
+    },
+    {
+      "type": "text",
+      "id": "product_tagline",
+      "label": "Tagline du produit (carte flottante)",
+      "default": "Protection intelligente 360°"
+    },
+    {
+      "type": "text",
+      "id": "card_product_name",
+      "label": "Nom produit (carte — sans sélection produit)",
+      "default": "Skito Pro Shield"
+    },
+    {
+      "type": "text",
+      "id": "card_product_tagline",
+      "label": "Tagline produit (carte — sans sélection produit)",
+      "default": "Protection intelligente 360°"
+    },
+    {
+      "type": "text",
+      "id": "card_product_price",
+      "label": "Prix (carte — sans sélection produit)",
+      "default": "€29.90"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero Skito"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  {%- if settings.favicon != blank -%}
+    <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32 }}">
+  {%- endif -%}
+
+  <title>
+    {{ page_title }}{% if current_tags %} &ndash; {{ current_tags | join: ', ' }}{% endif %}{% if current_page != 1 %} &ndash; {{ 'general.meta.page' | t: page: current_page }}{% endif %}{% unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless %}
+  </title>
+
+  {% if page_description %}
+    <meta name="description" content="{{ page_description | escape }}">
+  {% endif %}
+
+  <link rel="canonical" href="{{ canonical_url }}">
+
+  {%- if settings.social_sharing_image != blank -%}
+    <meta property="og:image" content="{{ settings.social_sharing_image | image_url: width: 1200 }}">
+  {%- endif -%}
+
+  {%- comment -%} Preconnect Google Fonts {%- endcomment -%}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  {{ content_for_header }}
+
+  {{ 'theme.css' | asset_url | stylesheet_tag }}
+</head>
+
+<body class="{% if template.name == 'index' %}page-home{% elsif template.name == 'product' %}page-product{% elsif template.name == 'collection' %}page-collection{% elsif template.name == 'cart' %}page-cart{% else %}page-{{ template.name }}{% endif %}">
+
+  <a href="#main-content" class="sr-only">{{ 'accessibility.skip_to_content' | t }}</a>
+
+  {% sections 'header' %}
+
+  <main id="main-content" role="main" tabindex="-1">
+    {{ content_for_layout }}
+  </main>
+
+  {% sections 'footer' %}
+
+  <div class="notification" role="status" aria-live="polite" aria-atomic="true"></div>
+
+  {{ 'theme.js' | asset_url | script_tag }}
+
+</body>
+</html>

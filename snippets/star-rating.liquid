@@ -1,0 +1,30 @@
+{%- comment -%}
+  Renders a star rating display.
+  Usage: {% render 'star-rating', rating: 5, count: 247 %}
+  Params:
+    rating  — number 1-5 (default 5)
+    count   — number of reviews (optional)
+    size    — 'sm' | 'md' (default 'md')
+{%- endcomment -%}
+
+{%- assign display_rating = rating | default: 5 -%}
+{%- assign display_count  = count  | default: nil -%}
+{%- assign star_size      = size   | default: 'md' -%}
+
+<div class="star-rating star-rating--{{ star_size }}"
+     role="img"
+     aria-label="Note : {{ display_rating }} sur 5{% if display_count %}, {{ display_count }} avis{% endif %}"
+     style="display:inline-flex;align-items:center;gap:0.375rem;">
+  <span class="stars"
+        style="display:flex;gap:2px;color:var(--color-green);{% if star_size == 'sm' %}font-size:0.8rem;{% else %}font-size:0.9rem;{% endif %}"
+        aria-hidden="true">
+    {%- for i in (1..5) -%}
+      {%- if i <= display_rating -%}★{%- else -%}<span style="opacity:0.25;">★</span>{%- endif -%}
+    {%- endfor -%}
+  </span>
+  {%- if display_count -%}
+    <span style="font-size:{% if star_size == 'sm' %}0.75rem{% else %}0.875rem{% endif %};color:var(--color-text-muted);">
+      ({{ display_count }})
+    </span>
+  {%- endif -%}
+</div>
